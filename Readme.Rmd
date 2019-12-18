@@ -1,7 +1,9 @@
 ---
-output: 
-  html_document: 
-    keep_md: yes
+output:
+  md_document: 
+    preserve_yaml: false
+  html_document:
+    keep_md: yes 
 ---
 
 # PSEM: Proxy Spectral Error Model.
@@ -19,6 +21,8 @@ PSEM implements the Proxy Spectral Error Model described in the discussion paper
 * Estimating the timescale-dependent uncertainty of paleoclimate records—a spectral approach. Part II: Application and interpretation.
 
 
+## Installation 
+
 **psem** can be installed directly from github
 
 ```{r, eval=FALSE}
@@ -28,3 +32,104 @@ if (!require("remotes")) {
 
 remotes::install_github("EarthSystemDiagnostics/psem")
 ```
+
+
+## Usage
+
+```{r}
+library(psem)
+```
+
+
+### Parametrise a proxy error spectrum for a core at 45°N 0°E
+
+
+#### Power spectrum for the stochastic climate
+
+```{r climate_spec_ex1, fig.width=4, fig.height=3}
+# PSD Climate
+example.lat <- 45
+
+clim.spec.ex1 <- ModelSpectrum(
+  freq = NULL,
+  latitude = example.lat,
+  variable = "temperature", beta = 1
+)
+
+p.clim.spec.ex1 <- PlotModelSpectrum(clim.spec.ex1)
+p.clim.spec.ex1
+```
+
+
+#### Amplitude of the seasonal cycle
+
+```{r}
+seasonal.amp <- AmpFromLocation(
+  longitude = 0,
+  latitude = example.lat,
+  proxy.type = "degC",
+  depth.upr = 0, depth.lwr = -50
+)
+```
+
+#### Orbital modulation of the amplitude of the seasonal cycle
+```{r}
+orbital.pars <- RelativeAmplitudeModulation(
+  latitude = example.lat,
+  maxTimeKYear = 23,
+  minTimeKYear = 1,
+  bPlot = FALSE
+)
+```
+
+#### Get list of parameters
+
+```{r}
+# sediment accumulation rate for the core
+ex.sed.acc.rate <- 10
+
+spec.pars.ex1 <- GetSpecPars(
+  proxy.type = "Mg_Ca",
+  T = 1e04,
+  delta_t = 100,
+  tau_r = 100,
+  sig.sq_a = orbital.pars$sig.sq_a,
+  sig.sq_c = seasonal.amp$sig.sq_c,
+  tau_b = 1000 * 10 / ex.sed.acc.rate,
+  tau_s = 1000 * 1 / ex.sed.acc.rate,
+  N = 30,
+  tau_p = 7/12,
+  phi_c = 0, delta_phi_c = 2 * pi / 3,
+  phi_a = pi / 2,
+  sigma.cal = 0.25,
+  sigma.meas = 0.25,
+  sigma.ind = 1,
+  clim.spec.fun = "ModelSpectrum",
+  clim.spec.fun.args =
+    list(latitude = example.lat, beta = 1)
+)
+
+
+```
+
+#### Call `ProxyErrorSpectrum` with these parameters and plot it.
+
+```{r, fig.width=5, fig.height=3}
+proxy.err.spec <- do.call(ProxyErrorSpectrum, spec.pars.ex1)
+PlotSpecError(proxy.err.spec)
+```
+
+#### Integrate the error spectrum to get timescale-dependent error
+
+```{r, fig.width=4.5, fig.height=3}
+tsd.error.var <- IntegrateErrorSpectra(proxy.err.spec)
+PlotTSDVariance(tsd.error.var)
+```
+
+#### Get error for a record smoothed to a given timescale
+
+```{r}
+err.500 <- GetProxyError(tsd.error.var, timescale = 500)
+knitr::kable(err.500, digits = 2)
+```
+
