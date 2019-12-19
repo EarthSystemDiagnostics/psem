@@ -1,4 +1,4 @@
 library(testthat)
-library(psem )
+library(psem)
 
-test_check("psem ")
+test_check("psem")

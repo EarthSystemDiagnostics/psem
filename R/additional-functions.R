@@ -1,4 +1,4 @@
-#' Regularise and smooth and irregular timeseries.
+#' Regularise and smooth an irregular timeseries.
 #'
 #' @param df A dataframe with columns of ages and values
 #' @param time.var A quoted string giving the name of the age column
@@ -12,11 +12,12 @@
 #' set.seed(20191205)
 #' n <- 100
 #' dat <- data.frame(time = sort(runif(n, 1, 1e04)),
-#'  value = PaleoSpec::SimPowerlaw(1, n))
+#'  value = arima.sim(list(ar = 0.9), n = n)
+#'  )
 #' plot(dat, type = "b")
 #' dat.smoothed <- SmoothIrregular(dat, "time", "value", tau_smooth = 500)
 #' dat.smoothed.2 <- SmoothIrregular(dat, "time", "value", tau_smooth = 500,
-#'  d_t = tau_smooth)
+#'  d_t = 500)
 #' lines(mean.value~age, data = dat.smoothed, col = "Red")
 #' lines(mean.value~age, data = dat.smoothed.2, col = "Blue")
 #' head(dat.smoothed)
@@ -55,6 +56,9 @@ SmoothIrregular <- function(df, time.var, value.var, tau_smooth,
 #' @export
 #' @examples
 #' RelativeAmplitudeModulation(34)
+#' \donttest{
+#' library(dplyr)
+#' library(tidyr)
 #' df <- crossing(lat = seq(-90, 90), maxT = c(23, 100, 1000)) %>%
 #' group_by(lat, maxT) %>%
 #'   mutate(sig_a = RelativeAmplitudeModulation(lat, maxTimeKYear = maxT, minTimeKYear = 0)$sig_a) %>%
@@ -75,6 +79,7 @@ SmoothIrregular <- function(df, time.var, value.var, tau_smooth,
 #' df %>%
 #'   ggplot(aes(x = lat, y = sig_a)) +
 #'   geom_line(aes(colour = factor(maxT)))
+#' }
 RelativeAmplitudeModulation <- function(latitude, maxTimeKYear = 100,
                                         minTimeKYear = 1, bPlot = FALSE) {
 
@@ -130,9 +135,9 @@ RelativeAmplitudeModulation <- function(latitude, maxTimeKYear = 100,
 #' @examples
 #' AmpFromLocation(120.5, 0.5, 0, -120, proxy.type = "d18O")
 AmpFromLocation <- function(longitude, latitude, depth.upr, depth.lwr,
-                            proxy.type=c("degC", psem:::proxy.types)){
+                            proxy.type=c("degC", proxy.types)){
 
-  proxy.type <- match.arg(proxy.type, choices = c("degC", psem:::proxy.types))
+  proxy.type <- match.arg(proxy.type, choices = c("degC", proxy.types))
 
   breit.lons <- unique(breitkreuz.amp$longitude)
   nearest.lon <- breit.lons[which.min(abs(longitude - breit.lons))]
@@ -170,43 +175,5 @@ AmpFromLocation <- function(longitude, latitude, depth.upr, depth.lwr,
 }
 
 
-#' PlotProxySeasonality
-#'
-#' @param res resolution
-#' @inheritParams ProxyErrorSpectrum
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#' PlotProxySeasonality(phi_c = 0, tau_p = 1/12, res = 365)
-#' PlotProxySeasonality(phi_c = 0, tau_p = 6/12, res = 365)
-#' PlotProxySeasonality(phi_c = -pi, tau_p = 3/12, res = 365)
-#' PlotProxySeasonality(phi_c = -pi, tau_p = 1/12, res = 12)
-#' PlotProxySeasonality(phi_c = pi, tau_p = 2/12, res = 12)
-PlotProxySeasonality <- function(phi_c, tau_p, res = 365){
 
-  n <- res
-  sc <- cos(seq(pi, 3*pi - 2*pi/n, length.out = n))
-
-  wts <- MonthlyWtsFromPhi_ctau_p(phi_c = phi_c, tau_p = tau_p, n.wts = res)
-
-  i <- 1 + (((1:n)-(1)) %% (res))
-
-  wts <- wts[i]
-
-  dat <- data.frame(x = 1:n, y = sc, wts = as.character(wts))
-  p <- ggplot(dat, aes(x = x, y = y, colour = wts, group = NA)) +
-    geom_path(size = 1) +
-    scale_colour_manual(values = c("1" = "Darkgreen", "0" = "Grey"),
-                        guide = FALSE ) +
-    labs(x = "1 year", y = "Seasonal cycle") +
-    theme_classic() +
-    theme(axis.text.x = element_blank())
-
-  if (res <= 24) {
-    p <- p + geom_point()
-  }
-  p
-}
 

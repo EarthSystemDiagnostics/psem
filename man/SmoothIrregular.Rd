@@ -2,7 +2,7 @@
 % Please edit documentation in R/additional-functions.R
 \name{SmoothIrregular}
 \alias{SmoothIrregular}
-\title{Regularise and smooth and irregular timeseries.}
+\title{Regularise and smooth an irregular timeseries.}
 \usage{
 SmoothIrregular(df, time.var, value.var, tau_smooth, d_t = NULL)
 }
@@ -18,17 +18,18 @@ SmoothIrregular(df, time.var, value.var, tau_smooth, d_t = NULL)
 \item{d_t}{Difference between time steps of new regular time series}
 }
 \description{
-Regularise and smooth and irregular timeseries.
+Regularise and smooth an irregular timeseries.
 }
 \examples{
 set.seed(20191205)
 n <- 100
 dat <- data.frame(time = sort(runif(n, 1, 1e04)),
- value = PaleoSpec::SimPowerlaw(1, n))
+ value = arima.sim(list(ar = 0.9), n = n)
+ )
 plot(dat, type = "b")
 dat.smoothed <- SmoothIrregular(dat, "time", "value", tau_smooth = 500)
 dat.smoothed.2 <- SmoothIrregular(dat, "time", "value", tau_smooth = 500,
- d_t = tau_smooth)
+ d_t = 500)
 lines(mean.value~age, data = dat.smoothed, col = "Red")
 lines(mean.value~age, data = dat.smoothed.2, col = "Blue")
 head(dat.smoothed)

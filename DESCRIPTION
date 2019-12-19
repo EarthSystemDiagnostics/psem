@@ -1,4 +1,4 @@
-Package: psem 
+Package: psem
 Title: Proxy Spectral Error Model
 Version: 0.10
 Authors@R: c(person("Thomas", "Laepple", email = "tlaepple@awi.de", role = c("aut")),
@@ -16,7 +16,8 @@ RoxygenNote: 7.0.2
 Imports: 
     ggplot2,
     orbitalforcing (>= 0.1),
-    dplyr
+    dplyr,
+    tidyr
 Remotes: 
     earthsystemdiagnostics/orbitalforcing
 Suggests: 

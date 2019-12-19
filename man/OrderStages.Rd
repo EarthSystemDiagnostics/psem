@@ -13,8 +13,5 @@ OrderStages(vec, rev = FALSE)
 An ordered factor
 }
 \description{
-
-}
-\details{
-
+Order the stages/components of the error
 }

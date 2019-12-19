@@ -15,7 +15,7 @@
 #' do.call(ProxyErrorSpectrum, GetSpecPars("Mg_Ca"))
 GetSpecPars <- function(proxy.type, ...) {
 
-  proxy.type <- match.arg(proxy.type, choices = psem:::proxy.types)
+  proxy.type <- match.arg(proxy.type, choices = proxy.types)
 
   args <- list(...)
 
@@ -804,7 +804,7 @@ rhoCI <- function(rho, n, alpha = 0.05){
 #' spec.obj <- do.call(ProxyErrorSpectrum, spec.pars)
 #'
 #' exp.corr <- ExpectedCorrelation(spec.obj)
-#' plot(exp.corr, type = "l", log = "x")
+#' plot(rho~smoothed.resolution, data = exp.corr, type = "l", log = "x")
 ExpectedCorrelation <- function(pes, spec.pars = NULL) {
   if (is.proxy.error.spec(pes) & is.null(spec.pars) == FALSE) {
     warning("spec.pars are being overridden by those contained in the proxy.error.spec object")
@@ -895,7 +895,6 @@ ExpectedCorrelation <- function(pes, spec.pars = NULL) {
 #' @rdname reverselog_trans
 #' @source https://stackoverflow.com/a/11054781/1198125
 #' @export
-#' @importFrom scales trans_new log_breaks
 #' @keywords internal
 reverselog_trans <- function(base = exp(1)) {
   trans <- function(x) -log(x, base)
@@ -1034,7 +1033,7 @@ PlotSpecError <- function(pes, show.low.power.panel = TRUE) {
 #' @param units Are the units degC or d18O, used for axis labelling
 #'
 #' @return ggplot object
-#' @import tidyr dplyr
+#' @import dplyr
 #'
 #' @export
 #'
@@ -1044,7 +1043,8 @@ PlotSpecError <- function(pes, show.low.power.panel = TRUE) {
 #'
 #' var.obj <- IntegrateErrorSpectra(spec.obj)
 #' PlotTSDVariance(var.obj, units = "degC")
-#' PlotTSDVariance(var.obj, include = F, c("Seasonal.bias", "Calibration.unc."))
+#' PlotTSDVariance(var.obj, units = "d18O")
+#' PlotTSDVariance(var.obj, include = FALSE, c("Seasonal.bias", "Calibration.unc."))
 #' PlotTSDVariance(var.obj, include.constant.error = TRUE)
 PlotTSDVariance <- function(var.obj,
                             components = c("Bioturbation", "Seasonal.bias",
@@ -1124,8 +1124,8 @@ PlotTSDVariance <- function(var.obj,
   units <- match.arg(units, choices = c("degC", "d18O"))
 
   ylab <- switch(units,
-         degC = expression("Error variance [°C"^2 ~"]"),
-         d18O = expression("Error variance [‰ d"^18*"O"^2 ~"]"))
+         degC = expression("Error variance [\u00B0C"^2 ~"]"),
+         d18O = expression("Error variance [\u2030 d"^18*"O"^2 ~"]"))
 
 
 
@@ -1133,7 +1133,7 @@ PlotTSDVariance <- function(var.obj,
     ggplot(aes(x = smoothed.resolution, y = var,
                fill = component, colour = component, group = component)) +
     geom_area(alpha = 0.75) +
-    scale_x_continuous(trans = ecustools::reverselog_trans(10)) +
+    scale_x_continuous(trans = reverselog_trans(10)) +
     scale_color_manual("", values = spec.colrs) +
     scale_fill_manual("", values = spec.colrs) +
     labs(y = ylab, x = "Timescale [years]") +

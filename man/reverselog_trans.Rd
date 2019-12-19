@@ -2,7 +2,7 @@
 % Please edit documentation in R/spec-model.R
 \name{reverselog_trans}
 \alias{reverselog_trans}
-\title{Title}
+\title{Transform axis to reversed log scale}
 \source{
 https://stackoverflow.com/a/11054781/1198125
 }
@@ -15,6 +15,10 @@ reverselog_trans(base = exp(1))
 \description{
 Custom axis transformation function
 }
-\seealso{
-\code{\link[scales]{trans_new}},\code{\link[scales]{log_breaks}}
+\details{
+Copied here from ecustools to avoid dependency
 }
+\seealso{
+\code{\link[scales]{trans_new}},\code{\link[scales]{breaks_log}}
+}
+\keyword{internal}

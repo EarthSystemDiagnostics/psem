@@ -30,6 +30,9 @@ amplitude relative to the mean seasonal amplitude
 }
 \examples{
 RelativeAmplitudeModulation(34)
+\donttest{
+library(dplyr)
+library(tidyr)
 df <- crossing(lat = seq(-90, 90), maxT = c(23, 100, 1000)) \%>\%
 group_by(lat, maxT) \%>\%
   mutate(sig_a = RelativeAmplitudeModulation(lat, maxTimeKYear = maxT, minTimeKYear = 0)$sig_a) \%>\%
@@ -50,6 +53,7 @@ df \%>\%
 df \%>\%
   ggplot(aes(x = lat, y = sig_a)) +
   geom_line(aes(colour = factor(maxT)))
+}
 }
 \author{
 Thomas Laepple

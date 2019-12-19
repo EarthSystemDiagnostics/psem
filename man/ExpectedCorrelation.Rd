@@ -24,5 +24,5 @@ spec.pars <- GetSpecPars("Mg_Ca", tau_b = 1000 * 10 / 2, sigma.meas = 1)
 spec.obj <- do.call(ProxyErrorSpectrum, spec.pars)
 
 exp.corr <- ExpectedCorrelation(spec.obj)
-plot(exp.corr, type = "l", log = "x")
+plot(rho~smoothed.resolution, data = exp.corr, type = "l", log = "x")
 }

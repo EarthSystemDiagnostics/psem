@@ -9,7 +9,7 @@ AmpFromLocation(
   latitude,
   depth.upr,
   depth.lwr,
-  proxy.type = c("degC", psem:::proxy.types)
+  proxy.type = c("degC", proxy.types)
 )
 }
 \arguments{

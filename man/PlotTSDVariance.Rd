@@ -37,6 +37,7 @@ spec.obj <- do.call(ProxyErrorSpectrum, spec.pars)
 
 var.obj <- IntegrateErrorSpectra(spec.obj)
 PlotTSDVariance(var.obj, units = "degC")
-PlotTSDVariance(var.obj, include = F, c("Seasonal.bias", "Calibration.unc."))
+PlotTSDVariance(var.obj, units = "d18O")
+PlotTSDVariance(var.obj, include = FALSE, c("Seasonal.bias", "Calibration.unc."))
 PlotTSDVariance(var.obj, include.constant.error = TRUE)
 }

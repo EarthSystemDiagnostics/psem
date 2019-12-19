@@ -39,6 +39,7 @@ SortForFFT <- function(spec.obj){
 #'
 #' @return a dataframe
 #' @export
+#' @import dplyr tidyr
 #'
 #' @examples
 #' spec.pars <- psem::GetSpecPars("Mg_Ca", T = 1e04+100, delta_t = 100,
