@@ -15,10 +15,9 @@ LazyData: true
 RoxygenNote: 7.0.2
 Imports: 
     ggplot2,
-    ecustools,
     orbitalforcing (>= 0.1),
-    maps,
     dplyr
 Remotes: 
-    earthsystemdiagnostics/orbitalforcing,
-    EarthSystemDiagnostics/ecustools
+    earthsystemdiagnostics/orbitalforcing
+Suggests: 
+    testthat (>= 2.1.0)

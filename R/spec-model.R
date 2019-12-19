@@ -583,37 +583,6 @@ WhiteNoise <- function(sigma.meas, sigma.ind, N, delta_t, T) {
 }
 
 
-#' #' Rename Power Spectrum Components
-#' #'
-#' #' Renames error spectrum components to be consistent with sedproxy manuscript
-#' #' @param df error spectrum or timescale dependent variance object
-#' #'
-#' #' @return renamed dataframe
-#' #' @export
-#' #'
-#' #' @examples
-#' #' spec.pars <- GetSpecPars("Mg_Ca")
-#' #' tmp <- do.call(ProxyErrorSpectrum, spec.pars)
-#' #' names(tmp)
-#' #' names(RenameSpecComponents(tmp))
-#' RenameSpecComponents <- function(df){
-#'
-#'   new.nms <- cbind(c("Bioturbation", "Aliasing.stochastic", "Aliasing.seasonal", "Orbital.mod.seas.bias", "Orbital.mod.seas.unc."),
-#'                    c("inf.N.part", "finite.N.part", "Orb_white", "Orb_non.white", "Orb_unc"))
-#'
-#'   nms <- names(df)
-#'   i <- match(nms, new.nms[, 2])
-#'   i.pos <- 1:length(i)
-#'
-#'   i.pos <- i.pos[is.na(i) == FALSE]
-#'   i <- i[is.na(i) == FALSE]
-#'
-#'   names(df)[i.pos] <- new.nms[i, 1]
-#'
-#'   return(df)
-#' }
-
-
 #' @title Order the stages/components of the error
 #' @param vec vector of names of error stages/components
 #' @return An ordered factor
@@ -782,7 +751,6 @@ GetProxyError <- function(var.obj, timescale, exclude = NULL,
       spread(component, value) %>%
       mutate_all(sqrt) %>%
       select(Total.inc.error, everything())
-
   }
 
   class(error) <- c("proxy.error", class(error))
@@ -916,6 +884,27 @@ ExpectedCorrelation <- function(pes, spec.pars = NULL) {
 
 
 # Plotting functions ---------
+
+
+#' @title Transform axis to reversed log scale
+#' @description Custom axis transformation function
+#' @param base base for the log transformation, Default: exp(1)
+#' @details Copied here from ecustools to avoid dependency
+#' @seealso
+#'  \code{\link[scales]{trans_new}},\code{\link[scales]{breaks_log}}
+#' @rdname reverselog_trans
+#' @source https://stackoverflow.com/a/11054781/1198125
+#' @export
+#' @importFrom scales trans_new log_breaks
+#' @keywords internal
+reverselog_trans <- function(base = exp(1)) {
+  trans <- function(x) -log(x, base)
+  inv <- function(x) base^(-x)
+  scales::trans_new(paste0("reverselog-", format(base)), trans, inv,
+                    scales::log_breaks(base = base),
+                    domain = c(1e-100, Inf))
+}
+
 
 #' Plot a proxy error spectrum
 #'
