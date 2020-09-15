@@ -44,7 +44,7 @@ Usage
     p.clim.spec.ex1 <- PlotModelSpectrum(clim.spec.ex1)
     p.clim.spec.ex1
 
-![](Readme_files/figure-markdown_strict/climate_spec_ex1-1.svg)
+![](Readme_files/figure-markdown_strict/climate_spec_ex1-1.png)
 
 #### Amplitude of the seasonal cycle
 
@@ -108,7 +108,7 @@ Usage
     ## geom_path: Each group consists of only one observation. Do you need to adjust
     ## the group aesthetic?
 
-![](Readme_files/figure-markdown_strict/unnamed-chunk-6-1.svg)
+![](Readme_files/figure-markdown_strict/unnamed-chunk-6-1.png)
 
 #### Integrate the error spectrum to get timescale-dependent error
 
@@ -117,7 +117,7 @@ Usage
 
     ## Warning: Removed 8 rows containing missing values (position_stack).
 
-![](Readme_files/figure-markdown_strict/unnamed-chunk-7-1.svg)
+![](Readme_files/figure-markdown_strict/unnamed-chunk-7-1.png)
 
 #### Get error for a record smoothed to a given timescale
 

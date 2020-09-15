@@ -8,6 +8,8 @@ OrderStages(vec, rev = FALSE)
 }
 \arguments{
 \item{vec}{vector of names of error stages/components}
+
+\item{rev}{logical, reverse the order of the error stages/components}
 }
 \value{
 An ordered factor

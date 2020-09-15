@@ -24,9 +24,11 @@ OrbitalError(
 \arguments{
 \item{nu}{frequency}
 
-\item{tau_s}{sediment slice thickness in years (layer.width / sedimentation rate)}
+\item{tau_s}{sediment slice thickness in years (layer.width / sedimentation
+rate)}
 
-\item{tau_b}{timescale of bioturbation (bioturbation depth / sedimentation rate) (L/sr)}
+\item{tau_b}{timescale of bioturbation (bioturbation depth / sedimentation
+rate) (L/sr)}
 
 \item{tau_p}{length of proxy carrier "growth season" (< 12 months)}
 
@@ -36,13 +38,18 @@ OrbitalError(
 
 \item{sig.sq_c}{variance of the seasonal cycle}
 
-\item{phi_c}{phase of carrier growth season relative to the maximum of the seasonal cycle}
+\item{phi_c}{phase of carrier growth season relative to the maximum of the
+seasonal cycle}
+
+\item{delta_phi_c}{Uncertainty in the phase of the signal carrier production.
+A value between 0 and 2Pi.}
 
 \item{nu_c}{1/1 (yr) = frequency of the seasonal cycle}
 
 \item{sig.sq_a}{variance of precessionary amplitude modulation}
 
-\item{phi_a}{phase of precessionary amplitude modulation relative to centre of finite timeseries of length T}
+\item{phi_a}{phase of precessionary amplitude modulation relative to centre
+of finite timeseries of length T}
 
 \item{nu_a}{1/tau_a = frequency of the orbital variation, e.g. precession}
 

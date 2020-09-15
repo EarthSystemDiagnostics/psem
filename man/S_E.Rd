@@ -22,11 +22,14 @@ S_E(
 \arguments{
 \item{nu}{frequency}
 
-\item{tau_s}{sediment slice thickness in years (layer.width / sedimentation rate)}
+\item{tau_s}{sediment slice thickness in years (layer.width / sedimentation
+rate)}
 
-\item{tau_b}{timescale of bioturbation (bioturbation depth / sedimentation rate) (L/sr)}
+\item{tau_b}{timescale of bioturbation (bioturbation depth / sedimentation
+rate) (L/sr)}
 
-\item{tau_r}{width of moving average filter that represents the "interpreted" resolution of the timeseries}
+\item{tau_r}{width of moving average filter that represents the "interpreted"
+resolution of the timeseries}
 
 \item{T}{length of a finite time series, e.g. 1e04}
 
@@ -34,11 +37,18 @@ S_E(
 
 \item{N}{number of signal carriers (e.g. individual foraminifera)}
 
-\item{clim.spec.fun}{a function to return climate power spectral density as a function of frequency, nu}
+\item{n.k}{the number of aliasers used when estimating the error spectrum of 
+the stochastic climate signal. Defaults to 15, does not normally need to be 
+adjusted.}
 
-\item{clim.spec.fun.args}{arguments to the named climate power spectrum function}
+\item{clim.spec.fun}{a function to return climate power spectral density as a
+function of frequency, nu}
 
-\item{n.nu.prime}{number of discrete frequencies at which to evaluate the PSD of the error}
+\item{clim.spec.fun.args}{arguments to the named climate power spectrum
+function}
+
+\item{n.nu.prime}{number of discrete frequencies at which to evaluate the PSD
+of the error}
 
 \item{plot.integral}{Plot the PSD of the error of the bioturbated climate
 timeseries. This PSD is numerically integrated to give the variance for the

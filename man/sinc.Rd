@@ -8,9 +8,15 @@ sinc(x, normalized = TRUE)
 }
 \arguments{
 \item{x}{numeric}
+
+\item{normalized}{logical, return the normalized or non-normalized sinc
+function, defaults to TRUE}
 }
 \description{
+Return the normalized or non-normalized sinc function. Returns 1
+for x == 0 
 sinc(x) = sin(pi * x) / (pi * x)
+sinc(x) = sin(x) / (x)
 }
 \examples{
 x <- seq(-10, 10, length.out = 1000)

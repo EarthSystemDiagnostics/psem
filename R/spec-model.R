@@ -145,24 +145,39 @@ GetNu <- function(T, delta_t) {
 #' @param nu frequency
 #' @param delta_t sampling frequency of the sediment core / climate timeseries
 #' @param nu_a 1/tau_a = frequency of the orbital variation, e.g. precession
-#' @param tau_s sediment slice thickness in years (layer.width / sedimentation rate)
-#' @param tau_b timescale of bioturbation (bioturbation depth / sedimentation rate) (L/sr)
+#' @param tau_s sediment slice thickness in years (layer.width / sedimentation
+#'   rate)
+#' @param tau_b timescale of bioturbation (bioturbation depth / sedimentation
+#'   rate) (L/sr)
 #' @param tau_a period of orbital cycle, e.g. 23e03 yrs
-#' @param tau_r width of moving average filter that represents the "interpreted" resolution of the timeseries
+#' @param tau_r width of moving average filter that represents the "interpreted"
+#'   resolution of the timeseries
 #' @param T length of a finite time series, e.g. 1e04
 #' @param nu_c 1/1 (yr) = frequency of the seasonal cycle
 #' @param tau_p length of proxy carrier "growth season" (< 12 months)
 #' @param N number of signal carriers (e.g. individual foraminifera)
 #' @param sig.sq_a variance of precessionary amplitude modulation
 #' @param sig.sq_c variance of the seasonal cycle
-#' @param clim.spec.fun a function to return climate power spectral density as a function of frequency, nu
-#' @param clim.spec.fun.args arguments to the named climate power spectrum function
-#' @param phi_a phase of precessionary amplitude modulation relative to centre of finite timeseries of length T
-#' @param phi_c phase of carrier growth season relative to the maximum of the seasonal cycle
-#' @param n.nu.prime number of discrete frequencies at which to evaluate the PSD of the error
+#' @param clim.spec.fun a function to return climate power spectral density as a
+#'   function of frequency, nu
+#' @param clim.spec.fun.args arguments to the named climate power spectrum
+#'   function
+#' @param phi_a phase of precessionary amplitude modulation relative to centre
+#'   of finite timeseries of length T
+#' @param phi_c phase of carrier growth season relative to the maximum of the
+#'   seasonal cycle
+#' @param delta_phi_c Uncertainty in the phase of the signal carrier production.
+#'   A value between 0 and 2Pi.
+#' @param n.nu.prime number of discrete frequencies at which to evaluate the PSD
+#'   of the error
 #' @param sigma.meas the standard deviation of the per sample measurement error
 #' @param sigma.ind the standard deviation of error between individuals (e.g.
 #'   foraminifera) e.g. due to "vital effects" or calcification depth
+#' @param sigma.cal the 1-sigma (standard deviation) of the calibration error in
+#'  the same units as the proxy
+#' @param n.k the number of aliasers used when estimating the error spectrum of 
+#' the stochastic climate signal. Defaults to 15, does not normally need to be 
+#' adjusted.
 #'   
 #' @return a dataframe of frequencies and spectral power
 #' @export
@@ -171,7 +186,7 @@ GetNu <- function(T, delta_t) {
 #' spec.pars <- GetSpecPars("Mg_Ca", tau_p = 4 / 12, delta_phi_c = pi)
 #' spec.obj <- do.call(ProxyErrorSpectrum, spec.pars)
 #' PlotSpecError(spec.obj)
-ProxyErrorSpectrum <- function(nu = NULL, tau_s, tau_b, tau_p, tau_r, T, delta_t,
+ProxyErrorSpectrum <- function(nu = NULL, tau_s, tau_b, tau_a, tau_p, tau_r, T, delta_t,
                                N, n.k,
                                clim.spec.fun, clim.spec.fun.args,
                                sig.sq_a, sig.sq_c,
@@ -406,7 +421,12 @@ OrbitalError <- function(nu = NULL,
 #' Normalized sinc function
 #'
 #' @param x numeric
-#' @description sinc(x) = sin(pi * x) / (pi * x)
+#' @param normalized logical, return the normalized or non-normalized sinc
+#'  function, defaults to TRUE
+#' @description Return the normalized or non-normalized sinc function. Returns 1
+#' for x == 0 
+#' sinc(x) = sin(pi * x) / (pi * x)
+#' sinc(x) = sin(x) / (x)
 #'
 #' @export
 #'
@@ -585,6 +605,7 @@ WhiteNoise <- function(sigma.meas, sigma.ind, N, delta_t, T) {
 
 #' @title Order the stages/components of the error
 #' @param vec vector of names of error stages/components
+#' @param rev logical, reverse the order of the error stages/components
 #' @return An ordered factor
 OrderStages <- function(vec, rev = FALSE) {
   fac.levels <- c(

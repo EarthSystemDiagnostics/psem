@@ -8,6 +8,7 @@ ProxyErrorSpectrum(
   nu = NULL,
   tau_s,
   tau_b,
+  tau_a,
   tau_p,
   tau_r,
   T,
@@ -33,13 +34,18 @@ ProxyErrorSpectrum(
 \arguments{
 \item{nu}{frequency}
 
-\item{tau_s}{sediment slice thickness in years (layer.width / sedimentation rate)}
+\item{tau_s}{sediment slice thickness in years (layer.width / sedimentation
+rate)}
 
-\item{tau_b}{timescale of bioturbation (bioturbation depth / sedimentation rate) (L/sr)}
+\item{tau_b}{timescale of bioturbation (bioturbation depth / sedimentation
+rate) (L/sr)}
+
+\item{tau_a}{period of orbital cycle, e.g. 23e03 yrs}
 
 \item{tau_p}{length of proxy carrier "growth season" (< 12 months)}
 
-\item{tau_r}{width of moving average filter that represents the "interpreted" resolution of the timeseries}
+\item{tau_r}{width of moving average filter that represents the "interpreted"
+resolution of the timeseries}
 
 \item{T}{length of a finite time series, e.g. 1e04}
 
@@ -47,9 +53,15 @@ ProxyErrorSpectrum(
 
 \item{N}{number of signal carriers (e.g. individual foraminifera)}
 
-\item{clim.spec.fun}{a function to return climate power spectral density as a function of frequency, nu}
+\item{n.k}{the number of aliasers used when estimating the error spectrum of 
+the stochastic climate signal. Defaults to 15, does not normally need to be 
+adjusted.}
 
-\item{clim.spec.fun.args}{arguments to the named climate power spectrum function}
+\item{clim.spec.fun}{a function to return climate power spectral density as a
+function of frequency, nu}
+
+\item{clim.spec.fun.args}{arguments to the named climate power spectrum
+function}
 
 \item{sig.sq_a}{variance of precessionary amplitude modulation}
 
@@ -59,18 +71,25 @@ ProxyErrorSpectrum(
 
 \item{nu_c}{1/1 (yr) = frequency of the seasonal cycle}
 
-\item{phi_a}{phase of precessionary amplitude modulation relative to centre of finite timeseries of length T}
+\item{phi_a}{phase of precessionary amplitude modulation relative to centre
+of finite timeseries of length T}
 
-\item{phi_c}{phase of carrier growth season relative to the maximum of the seasonal cycle}
+\item{phi_c}{phase of carrier growth season relative to the maximum of the
+seasonal cycle}
+
+\item{delta_phi_c}{Uncertainty in the phase of the signal carrier production.
+A value between 0 and 2Pi.}
 
 \item{sigma.meas}{the standard deviation of the per sample measurement error}
 
 \item{sigma.ind}{the standard deviation of error between individuals (e.g.
 foraminifera) e.g. due to "vital effects" or calcification depth}
 
-\item{n.nu.prime}{number of discrete frequencies at which to evaluate the PSD of the error}
+\item{sigma.cal}{the 1-sigma (standard deviation) of the calibration error in
+the same units as the proxy}
 
-\item{tau_a}{period of orbital cycle, e.g. 23e03 yrs}
+\item{n.nu.prime}{number of discrete frequencies at which to evaluate the PSD
+of the error}
 }
 \value{
 a dataframe of frequencies and spectral power
