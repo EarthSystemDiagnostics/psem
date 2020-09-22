@@ -4,7 +4,12 @@
 \alias{IntegrateErrorSpectra}
 \title{Integrate Error Spectra}
 \usage{
-IntegrateErrorSpectra(pes, method = "sincfilter", tau_smooth = NULL)
+IntegrateErrorSpectra(
+  pes,
+  method = "sincfilter",
+  tau_smooth = NULL,
+  thin.tau_smooth = TRUE
+)
 }
 \arguments{
 \item{pes}{Object of class proxy.error.spec, e.g. output from \link{ProxyErrorSpectrum}}
@@ -13,6 +18,9 @@ IntegrateErrorSpectra(pes, method = "sincfilter", tau_smooth = NULL)
 
 \item{tau_smooth}{temporal resolution to which the proxy timeseries is
 smoothed.  If NULL, variance is returned at all odd multiples of delta_t}
+
+\item{thin.tau_smooth}{If TRUE and the vector of tau_smooth values is longer
+than 1000, these are thinned to 1000 values equally spaced on a log-scale}
 }
 \value{
 timescale dependent variance object (dataframe)
@@ -24,9 +32,10 @@ simulate the case where a running mean has been passed over a proxy record.
 \examples{
 spec.pars <- GetSpecPars("Mg_Ca", tau_p = 1 / 12, phi_c = 0, seas.amp = 4, T = 100 * 101)
 spec.obj <- do.call(ProxyErrorSpectrum, spec.pars)
-PlotSpecError(spec.obj)
+PlotSpecError(spec.obj, show.low.power.panel = F)
 var.obj <- IntegrateErrorSpectra(spec.obj)
 PlotTSDVariance(var.obj)
 
 var.obj <- IntegrateErrorSpectra(spec.obj, tau_smooth = 1000)
+
 }

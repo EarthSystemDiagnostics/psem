@@ -11,7 +11,8 @@ PlotTSDVariance(
     "Individual.variation", "Meas.error"),
   include = TRUE,
   include.constant.errors = FALSE,
-  units = c("degC", "d18O")
+  units = c("degC", "d18O"),
+  thin.var.obj = TRUE
 )
 }
 \arguments{
@@ -24,6 +25,9 @@ PlotTSDVariance(
 \item{include.constant.errors}{Include the constant (nu = 0) error components}
 
 \item{units}{Are the units degC or d18O, used for axis labelling}
+
+\item{thin.var.obj}{If TRUE and the variance object contains more than 1000 frequencies
+these are thinned to 1000 frequencies equally spaced on a log-scale}
 }
 \value{
 ggplot object

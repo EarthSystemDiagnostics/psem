@@ -638,20 +638,23 @@ OrderStages <- function(vec, rev = FALSE) {
 #' @param method sinc filter is the only currently supported method
 #' @param tau_smooth temporal resolution to which the proxy timeseries is
 #' smoothed.  If NULL, variance is returned at all odd multiples of delta_t
-#'
+#' @param thin.tau_smooth If TRUE and the vector of tau_smooth values is longer
+#'  than 1000, these are thinned to 1000 values equally spaced on a log-scale
+#' 
 #' @return timescale dependent variance object (dataframe)
 #' @export
 #'
 #' @examples
 #' spec.pars <- GetSpecPars("Mg_Ca", tau_p = 1 / 12, phi_c = 0, seas.amp = 4, T = 100 * 101)
 #' spec.obj <- do.call(ProxyErrorSpectrum, spec.pars)
-#' PlotSpecError(spec.obj)
+#' PlotSpecError(spec.obj, show.low.power.panel = F)
 #' var.obj <- IntegrateErrorSpectra(spec.obj)
 #' PlotTSDVariance(var.obj)
 #'
 #' var.obj <- IntegrateErrorSpectra(spec.obj, tau_smooth = 1000)
+#' 
 IntegrateErrorSpectra <- function(pes, method = "sincfilter",
-                                  tau_smooth = NULL) {
+                                  tau_smooth = NULL, thin.tau_smooth = TRUE) {
   if (is.proxy.error.spec(pes) == FALSE)
     stop("pes must be a proxy.error.spec object")
 
@@ -691,8 +694,18 @@ IntegrateErrorSpectra <- function(pes, method = "sincfilter",
       # Return variance for all odd multiples of delta_t
     } else {
       T <- 1 / min(df$nu[df$nu > 0])
+      
+      
       tau_smooth <- seq(spec.pars$delta_t, T, 2 * spec.pars$delta_t)
       tau_smooth <- head(tau_smooth, -1)
+      
+      # thin tau_smooth
+      n.tau_smooth <- length(tau_smooth)
+      if (thin.tau_smooth == TRUE & n.tau_smooth > 1000) {
+        warning("Thinning frequencies for performance reasons.")
+        tau_smooth <- tau_smooth[unique(round(exp(seq(log(1), log(n.tau_smooth), length.out = 1000))))]
+        }
+      
       flt.lst <- lapply(tau_smooth, function(s) {
         asinc(df$nu, T = s, delta_t = spec.pars$delta_t)^2
       })
@@ -743,6 +756,9 @@ GetProxyError <- function(var.obj, timescale, exclude = NULL,
 
   spec.pars <- var.obj[["spec.pars"]]
   var.obj <- var.obj[["proxy.error.var"]]
+  
+  if (timescale %in% var.obj$smoothed.resolution == FALSE) 
+    stop("Error not available at this timescale / frequency")
 
   if (include.f.zero == FALSE){
     f.zero <- var.obj[is.infinite(var.obj$smoothed.resolution),]
@@ -1052,6 +1068,8 @@ PlotSpecError <- function(pes, show.low.power.panel = TRUE) {
 #' @param include Include or exclude components named in \code{components}
 #' @param include.constant.errors Include the constant (nu = 0) error components
 #' @param units Are the units degC or d18O, used for axis labelling
+#' @param thin.var.obj If TRUE and the variance object contains more than 1000 frequencies
+#' these are thinned to 1000 frequencies equally spaced on a log-scale
 #'
 #' @return ggplot object
 #' @import dplyr
@@ -1078,7 +1096,8 @@ PlotTSDVariance <- function(var.obj,
                                            "Meas.error"),
                             include = TRUE,
                             include.constant.errors = FALSE,
-                            units = c("degC", "d18O")){
+                            units = c("degC", "d18O"),
+                            thin.var.obj = TRUE){
 
   if ("proxy.error.var" %in% class(var.obj)){
     spec.pars <- var.obj[["spec.pars"]]
@@ -1129,12 +1148,13 @@ PlotTSDVariance <- function(var.obj,
 
   # if variance object is very large, thin out to 1k points evenly spread
   # in log frequency space
-  if (n.row > 1000){
-    prec <- diff(range(log(var.obj$nu), na.rm = TRUE)) / 1000
+  if (n.row > 1000 & thin.var.obj == TRUE){
+    message("Thinning variance object for plotting")
+    prec <- diff(range(log(1/var.obj$smoothed.resolution), na.rm = TRUE)) / 1000
     var.obj <- var.obj  %>%
       group_by(component) %>%
-      mutate(nu.r = round(log(nu) / prec) * prec) %>%
-      group_by(component, nu.r) %>%
+      mutate(smoothed.resolution.r = round(log(1/smoothed.resolution) / prec) * prec) %>%
+      group_by(component, smoothed.resolution.r) %>%
       slice(1L)
   }
 
