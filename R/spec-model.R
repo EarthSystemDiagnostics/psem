@@ -144,12 +144,11 @@ GetNu <- function(T, delta_t) {
 #' Power Spectral Density of the Error in a Sediment Archived Proxy Timeseries
 #' @param nu frequency
 #' @param delta_t sampling frequency of the sediment core / climate timeseries
-#' @param nu_a 1/tau_a = frequency of the orbital variation, e.g. precession
+#' @param nu_a 1/tau_a = frequency of the orbital variation, e.g. for precession 1/23e03 yrs
 #' @param tau_s sediment slice thickness in years (layer.width / sedimentation
 #'   rate)
 #' @param tau_b timescale of bioturbation (bioturbation depth / sedimentation
 #'   rate) (L/sr)
-#' @param tau_a period of orbital cycle, e.g. 23e03 yrs
 #' @param tau_r width of moving average filter that represents the "interpreted"
 #'   resolution of the timeseries
 #' @param T length of a finite time series, e.g. 1e04
@@ -186,7 +185,7 @@ GetNu <- function(T, delta_t) {
 #' spec.pars <- GetSpecPars("Mg_Ca", tau_p = 4 / 12, delta_phi_c = pi)
 #' spec.obj <- do.call(ProxyErrorSpectrum, spec.pars)
 #' PlotSpecError(spec.obj)
-ProxyErrorSpectrum <- function(nu = NULL, tau_s, tau_b, tau_a, tau_p, tau_r, T, delta_t,
+ProxyErrorSpectrum <- function(nu = NULL, tau_s, tau_b, tau_p, tau_r, T, delta_t,
                                N, n.k,
                                clim.spec.fun, clim.spec.fun.args,
                                sig.sq_a, sig.sq_c,

@@ -51,7 +51,7 @@ A value between 0 and 2Pi.}
 \item{phi_a}{phase of precessionary amplitude modulation relative to centre
 of finite timeseries of length T}
 
-\item{nu_a}{1/tau_a = frequency of the orbital variation, e.g. precession}
+\item{nu_a}{1/tau_a = frequency of the orbital variation, e.g. for precession 1/23e03 yrs}
 
 \item{N}{number of signal carriers (e.g. individual foraminifera)}
 }

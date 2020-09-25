@@ -62,7 +62,8 @@ parameter.symbol <-
     "phi_a", "\\(\\phi_a\\)",  "phi[a]",
     "sigma.meas", "\\(\\sigma_{meas}\\)",  "sigma[meas]",
     "sigma.ind", "\\(\\sigma_{ind}\\)",  "sigma[ind]",
-    "sigma.cal", "\\(\\sigma_{cal}\\)",  "sigma[cal]"
+    "sigma.cal", "\\(\\sigma_{cal}\\)",  "sigma[cal]",
+    "beta", "\\(\\beta\\)", "beta"
   )
 
 parameter.units <-

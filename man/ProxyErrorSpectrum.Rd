@@ -8,7 +8,6 @@ ProxyErrorSpectrum(
   nu = NULL,
   tau_s,
   tau_b,
-  tau_a,
   tau_p,
   tau_r,
   T,
@@ -40,8 +39,6 @@ rate)}
 \item{tau_b}{timescale of bioturbation (bioturbation depth / sedimentation
 rate) (L/sr)}
 
-\item{tau_a}{period of orbital cycle, e.g. 23e03 yrs}
-
 \item{tau_p}{length of proxy carrier "growth season" (< 12 months)}
 
 \item{tau_r}{width of moving average filter that represents the "interpreted"
@@ -67,7 +64,7 @@ function}
 
 \item{sig.sq_c}{variance of the seasonal cycle}
 
-\item{nu_a}{1/tau_a = frequency of the orbital variation, e.g. precession}
+\item{nu_a}{1/tau_a = frequency of the orbital variation, e.g. for precession 1/23e03 yrs}
 
 \item{nu_c}{1/1 (yr) = frequency of the seasonal cycle}
 
