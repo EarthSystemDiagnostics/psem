@@ -34,11 +34,11 @@ names(linetype.scl) <- names(spec.colrs)
 
 spec.linetypes <- linetype.scl
 
-usethis::use_data(error.components, spec.colrs, linetype.scl, spec.linetypes, internal = FALSE, overwrite = TRUE)
+#usethis::use_data(error.components, spec.colrs, linetype.scl, spec.linetypes, overwrite = TRUE)
 
 
 proxy.types <- c("T_deg_Mg_Ca", "T_deg_Uk37", "Mg_Ca", "Uk37", "d18O")
-usethis::use_data(proxy.types, overwrite = TRUE, internal = TRUE)
+#usethis::use_data(proxy.types, overwrite = TRUE)
 
 
 
@@ -132,6 +132,6 @@ parameter.source <-
     "sigma.cal", "Standard error of the intercept term of a calibration regression model"
   )
 
-usethis::use_data(parameter.description, parameter.source, parameter.symbol, parameter.units, overwrite = TRUE)
+#usethis::use_data(parameter.description, parameter.source, parameter.symbol, parameter.units, overwrite = TRUE)
 
 

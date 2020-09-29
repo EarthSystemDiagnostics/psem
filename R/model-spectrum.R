@@ -24,7 +24,7 @@
 #' ModelSpectrum(freq = c(0.1, GetNu(T = 10000, delta_t = 100), 0.1), latitude = 20, beta=1, bPlot=FALSE)
 #' ModelSpectrum(freq = c(0.6, 1), latitude = 20, beta=1, bPlot=FALSE)
 
-ModelSpectrum <- function(freq = NULL, latitude, spectable=spectable, beta = 1,
+ModelSpectrum <- function(freq = NULL, latitude, spectable = psem:::spectable, beta = 1,
                           variable = c("temperature", "d18O", "T_deg_Mg_Ca", "T_deg_Uk37", "d18O"),
                           freq.match.lower = 0.03,
                           freq.match.upper = 0.1, bPlot = FALSE){
@@ -45,7 +45,7 @@ ModelSpectrum <- function(freq = NULL, latitude, spectable=spectable, beta = 1,
   # For latitudes > 75N/S, 75N/S is used as there is not enough
   # data further north/south
 
-  spectable <- psem::spectable
+  #spectable <- spectable
 
   iLat <- which.min(abs(latitude - spectable$lat))
 
