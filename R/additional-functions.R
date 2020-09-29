@@ -56,10 +56,10 @@ SmoothIrregular <- function(df, time.var, value.var, tau_smooth,
 #' @export
 #' @examples
 #' RelativeAmplitudeModulation(34)
-#' \donttest{
+#' \dontrun{
 #' library(dplyr)
 #' library(tidyr)
-#' df <- crossing(lat = seq(-90, 90), maxT = c(23, 100, 1000)) %>%
+#' df <- crossing(lat = seq(-90, 90, by = 10), maxT = c(23, 100, 1000)) %>%
 #' group_by(lat, maxT) %>%
 #'   mutate(sig_a = RelativeAmplitudeModulation(lat, maxTimeKYear = maxT, minTimeKYear = 0)$sig_a) %>%
 #'   ungroup() %>%

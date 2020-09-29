@@ -32,7 +32,7 @@ simulate the case where a running mean has been passed over a proxy record.
 \examples{
 spec.pars <- GetSpecPars("Mg_Ca", tau_p = 1 / 12, phi_c = 0, seas.amp = 4, T = 100 * 101)
 spec.obj <- do.call(ProxyErrorSpectrum, spec.pars)
-PlotSpecError(spec.obj, show.low.power.panel = F)
+PlotSpecError(spec.obj, show.low.power.panel = FALSE)
 var.obj <- IntegrateErrorSpectra(spec.obj)
 PlotTSDVariance(var.obj)
 

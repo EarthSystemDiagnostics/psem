@@ -646,7 +646,7 @@ OrderStages <- function(vec, rev = FALSE) {
 #' @examples
 #' spec.pars <- GetSpecPars("Mg_Ca", tau_p = 1 / 12, phi_c = 0, seas.amp = 4, T = 100 * 101)
 #' spec.obj <- do.call(ProxyErrorSpectrum, spec.pars)
-#' PlotSpecError(spec.obj, show.low.power.panel = F)
+#' PlotSpecError(spec.obj, show.low.power.panel = FALSE)
 #' var.obj <- IntegrateErrorSpectra(spec.obj)
 #' PlotTSDVariance(var.obj)
 #'
@@ -954,7 +954,7 @@ reverselog_trans <- function(base = exp(1)) {
 #' spec.pars <- psem::GetSpecPars("Mg_Ca", T = 1e04)
 #' spec.obj <- do.call(psem::ProxyErrorSpectrum, spec.pars)
 #' PlotSpecError(spec.obj)
-PlotSpecError <- function(pes, show.low.power.panel = TRUE) {
+PlotSpecError <- function(pes, show.low.power.panel = FALSE) {
   if (is.logical(show.low.power.panel) == FALSE) stop("show.low.power.panel should be TRUE or FALSE")
 
   if (is.proxy.error.spec(pes)) {
@@ -1019,7 +1019,7 @@ PlotSpecError <- function(pes, show.low.power.panel = TRUE) {
   lbls[lbls == min.pos.nu / 2] <- 0
 
   if (show.low.power.panel == FALSE) df <- subset(df, max.spec.grp == "high")
-
+  
   p <- ggplot(data = df, aes(x = nu, y = spec, colour = component, linetype = component)) +
     geom_line() +
     scale_x_continuous(trans = "log10", breaks = brks, labels = lbls) +

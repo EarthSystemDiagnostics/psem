@@ -4,7 +4,7 @@
 \alias{PlotSpecError}
 \title{Plot a proxy error spectrum}
 \usage{
-PlotSpecError(pes, show.low.power.panel = TRUE)
+PlotSpecError(pes, show.low.power.panel = FALSE)
 }
 \arguments{
 \item{pes}{Object of class proxy.error.spec, e.g. output from ProxyErrorSpectrum}
