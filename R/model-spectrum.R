@@ -156,14 +156,17 @@ PlotModelSpectrum <- function(model.spec){
   max.exp <- round(log10(1/min.pos.freq))
   exps <- 10^(1:max.exp)
   brks <- 1/sort(c(2, exps, 5*exps))
+  
+  arrow.pos.y <- exp(log(max(model.spec$spec)) - 
+    (0.1 * (log(max(model.spec$spec)) - log(min(model.spec$spec)))))
 
   model.spec[c("freq", "spec")] %>%
     as.data.frame() %>%
     ggplot(aes(x = freq, y = spec)) +
     geom_line() +
     geom_segment(aes(x = exp(log(f.lwr) - 1), xend = exp(log(f.lwr) + 1),
-                     y = 0.75*max(model.spec$spec),
-                     yend = 0.75*max(model.spec$spec)),
+                     y = arrow.pos.y,
+                     yend = arrow.pos.y),
                  colour = "Black",
                  arrow = arrow(
                    length = unit(0.015, "npc"), ends = "both",
