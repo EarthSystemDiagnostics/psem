@@ -1,12 +1,12 @@
 Package: psem
 Title: Proxy Spectral Error Model
-Version: 0.10
+Version: 1.0.0
 Authors@R: c(person("Thomas", "Laepple", email = "tlaepple@awi.de", role = c("aut")),
   person("Torben", "Kunz", email = "torben.kunz@awi.de", role = c("aut")),
   person("Andrew", "Dolman", email = "andrew.dolman@awi.de", role = c("aut", "cre")))
-Description: An R package to implement the spectral error model for proxy records described in the discussion papers
-    Estimating the timescale-dependent uncertainty of paleoclimate records—a spectral approach. Part I: Theoretical concept 
-    Estimating the timescale-dependent uncertainty of paleoclimate records—a spectral approach. Part II: Application and interpretation.
+Description: An R package to implement the spectral error model for proxy records described in the papers:
+    Kunz, T., Dolman, A. M. and Laepple, T.: A spectral approach to estimating the timescale-dependent uncertainty of paleoclimate records – Part 1: Theoretical concept, Climate of the Past, 16(4), 1469–1492, doi:https://doi.org/10.5194/cp-16-1469-2020, 2020.
+    Dolman, A. M., Kunz, T., Groeneveld, J. and Laepple, T.: Estimating the timescale-dependent uncertainty of paleoclimate records - a spectral approach. Part II: Application and interpretation, Climate of the Past Discussions, 1–22, doi:https://doi.org/10.5194/cp-2019-153, 2020.
 Depends:
     R (>= 3.3.1)
 License: MIT + file LICENSE
