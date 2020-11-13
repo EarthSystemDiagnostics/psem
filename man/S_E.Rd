@@ -61,7 +61,8 @@ list of frequencies and error spectrum components
 Get error components for stochastic climate signal
 }
 \examples{
-spec.pars <- GetSpecPars("Mg_Ca", phi_c = pi, delta_phi_c = pi, sig.sq_a = 0.1, tau_p = 1/12)
+spec.pars <- GetSpecPars("Mg_Ca", phi_c = pi, delta_phi_c = pi,
+ sig.sq_a = 0.1, tau_p = 1/12)
 spec.pars$nu <- GetNu(spec.pars$T, spec.pars$delta_t)
 do.call(S_E, spec.pars[names(spec.pars) \%in\% names(formals(S_E))])
 }

@@ -9,9 +9,9 @@
 #'  and power (spec)
 #'
 #' @return a dataframe
-#' @export
 #'
 #' @examples
+#' @keywords internal
 #' nu <- seq(-1/2, 1/2, 1/10)
 #' dat <- data.frame(nu = nu, spec = 0.1*nu^1)
 #' SortForFFT(dat)

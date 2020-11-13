@@ -3,14 +3,33 @@ PSEM: Proxy Spectral Error Model.
 
 ------------------------------------------------------------------------
 
-PSEM implements the Proxy Spectral Error Model described in the
+![](inst/PalMod_Logo_RGB.png)
+
+**psem** implements the Proxy Spectral Error Model described in the
 discussion papers:
 
--   Estimating the timescale-dependent uncertainty of paleoclimate
-    records—a spectral approach. Part I: Theoretical concept
--   Estimating the timescale-dependent uncertainty of paleoclimate
-    records—a spectral approach. Part II: Application and
+-   A spectral approach to estimating the timescale-dependent
+    uncertainty of paleoclimate records – Part I: Theoretical concept.
+    <a href="https://doi.org/10.5194/cp-16-1469-2020" class="uri">https://doi.org/10.5194/cp-16-1469-2020</a>
+
+-   A spectral approach to estimating the timescale-dependent
+    uncertainty of paleoclimate records – Part II: Application and
     interpretation.
+    <a href="https://cp.copernicus.org/preprints/cp-2019-153/" class="uri">https://cp.copernicus.org/preprints/cp-2019-153/</a>
+
+Please contact Dr Andrew Dolman
+&lt;<a href="mailto:andrew.dolman@awi.de" class="email">andrew.dolman@awi.de</a>&gt;,
+Prof. Thomas Laepple
+&lt;<a href="mailto:tlaepple@awi.de" class="email">tlaepple@awi.de</a>&gt;,
+or Dr Torben Kunz
+&lt;<a href="mailto:tkunz@awi.de" class="email">tkunz@awi.de</a>&gt;, at
+the Alfred-Wegener-Institute, Helmholtz Centre for Polar and Marine
+Research, Germany, for more information.
+
+This work was supported by German Federal Ministry of Education and
+Research (BMBF) as Research for Sustainability initiative
+[FONA](https://www.fona.de/) through the
+[PalMod](https://www.palmod.de/) project (FKZ: 01LP1509C).
 
 Installation
 ------------
@@ -95,31 +114,23 @@ Usage
 #### Call `ProxyErrorSpectrum` with these parameters and plot it.
 
     proxy.err.spec <- do.call(ProxyErrorSpectrum, spec.pars.ex1)
-
-    ## Warning in (function (nu = NULL, tau_s, tau_b, tau_p, tau_r, T, delta_t, :
-    ## Rounding T to 10100 so that T is an odd multiple of delta_t
-
     PlotSpecError(proxy.err.spec)
 
     ## Joining, by = c("component", "ax.grp")
-
-    ## Warning: Transformation introduced infinite values in continuous y-axis
 
     ## geom_path: Each group consists of only one observation. Do you need to adjust
     ## the group aesthetic?
 
 ![](Readme_files/figure-markdown_strict/unnamed-chunk-6-1.png)
 
-#### Integrate the error spectrum to get timescale-dependent error
+#### Integrate the error spectrum to get timescale-dependent error.
 
     tsd.error.var <- IntegrateErrorSpectra(proxy.err.spec)
     PlotTSDVariance(tsd.error.var)
 
-    ## Warning: Removed 8 rows containing missing values (position_stack).
-
 ![](Readme_files/figure-markdown_strict/unnamed-chunk-7-1.png)
 
-#### Get error for a record smoothed to a given timescale
+#### Get error for a record smoothed to a given timescale, here 500 years.
 
     err.500 <- GetProxyError(tsd.error.var, timescale = 500)
     knitr::kable(err.500, digits = 2)

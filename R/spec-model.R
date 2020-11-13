@@ -326,7 +326,8 @@ OrbitalError <- function(nu = NULL,
   Deltat <- delta_t
   T <- T     ## T must be an odd multiple of Deltat
 
-  ### amplitudes and phases of the seasonal cycle and the orbital modulation (nus in 1/time, here 1/years; phases in radians)
+  ### amplitudes and phases of the seasonal cycle and the orbital modulation 
+  ### (nus in 1/time, here 1/years; phases in radians)
 
   sigc <- sqrt(sig.sq_c)
   phic.ev <- phi_c
@@ -515,7 +516,8 @@ VarSine <- function(full.amp) {
 #' @return list of frequencies and error spectrum components
 #' @export
 #' @examples
-#' spec.pars <- GetSpecPars("Mg_Ca", phi_c = pi, delta_phi_c = pi, sig.sq_a = 0.1, tau_p = 1/12)
+#' spec.pars <- GetSpecPars("Mg_Ca", phi_c = pi, delta_phi_c = pi,
+#'  sig.sq_a = 0.1, tau_p = 1/12)
 #' spec.pars$nu <- GetNu(spec.pars$T, spec.pars$delta_t)
 #' do.call(S_E, spec.pars[names(spec.pars) %in% names(formals(S_E))])
 #' @seealso \code{\link{ProxyErrorSpectrum}}
@@ -930,7 +932,6 @@ ExpectedCorrelation <- function(pes, spec.pars = NULL) {
 #'  \code{\link[scales]{trans_new}},\code{\link[scales]{breaks_log}}
 #' @rdname reverselog_trans
 #' @source https://stackoverflow.com/a/11054781/1198125
-#' @export
 #' @keywords internal
 reverselog_trans <- function(base = exp(1)) {
   trans <- function(x) -log(x, base)

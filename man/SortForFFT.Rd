@@ -16,8 +16,16 @@ a dataframe
 \description{
 Sort a power spectrum into the correct order for fft(., inverse = T)
 }
-\examples{
-nu <- seq(-1/2, 1/2, 1/10)
-dat <- data.frame(nu = nu, spec = 0.1*nu^1)
-SortForFFT(dat)
-}
+\keyword{0.1*nu^1)}
+\keyword{1/10)}
+\keyword{1/2,}
+\keyword{<-}
+\keyword{=}
+\keyword{SortForFFT(dat)}
+\keyword{dat}
+\keyword{data.frame(nu}
+\keyword{internal}
+\keyword{nu}
+\keyword{nu,}
+\keyword{seq(-1/2,}
+\keyword{spec}

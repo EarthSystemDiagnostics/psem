@@ -15,10 +15,22 @@ output:
 knitr::opts_chunk$set(dev = "png", dpi = 300)
 ```
 
-PSEM implements the Proxy Spectral Error Model described in the discussion papers:
+![](inst/PalMod_Logo_RGB.png)
 
-* Estimating the timescale-dependent uncertainty of paleoclimate records—a spectral approach. Part I: Theoretical concept 
-* Estimating the timescale-dependent uncertainty of paleoclimate records—a spectral approach. Part II: Application and interpretation.
+**psem** implements the Proxy Spectral Error Model described in the discussion papers:
+
+* A spectral approach to estimating the timescale-dependent uncertainty of paleoclimate records – Part I: Theoretical concept.
+https://doi.org/10.5194/cp-16-1469-2020
+
+* A spectral approach to estimating the timescale-dependent uncertainty of paleoclimate records – Part II: Application and interpretation.
+https://cp.copernicus.org/preprints/cp-2019-153/
+
+
+Please contact Dr Andrew Dolman <<andrew.dolman@awi.de>>, Prof. Thomas Laepple <<tlaepple@awi.de>>, or Dr Torben Kunz <<tkunz@awi.de>>, at the Alfred-Wegener-Institute, Helmholtz Centre for Polar and Marine Research, Germany, for more information.
+
+
+This work was supported by German Federal Ministry of Education and Research (BMBF) as Research for Sustainability initiative [FONA](https://www.fona.de/) through the [PalMod](https://www.palmod.de/) project (FKZ: 01LP1509C). 
+
 
 
 ## Installation 
@@ -46,7 +58,7 @@ library(psem)
 
 #### Power spectrum for the stochastic climate
 
-```{r climate_spec_ex1, fig.width=4, fig.height=3}
+```{r climate_spec_ex1, fig.width=4, fig.height=3, warning=FALSE}
 # PSD Climate
 example.lat <- 45
 
@@ -114,21 +126,21 @@ spec.pars.ex1 <- GetSpecPars(
 
 #### Call `ProxyErrorSpectrum` with these parameters and plot it.
 
-```{r, fig.width=5, fig.height=3}
+```{r, fig.width=5, fig.height=3, warning=FALSE}
 proxy.err.spec <- do.call(ProxyErrorSpectrum, spec.pars.ex1)
 PlotSpecError(proxy.err.spec)
 ```
 
-#### Integrate the error spectrum to get timescale-dependent error
+#### Integrate the error spectrum to get timescale-dependent error.
 
-```{r, fig.width=4.5, fig.height=3}
+```{r, fig.width=4.5, fig.height=3, warning=FALSE}
 tsd.error.var <- IntegrateErrorSpectra(proxy.err.spec)
 PlotTSDVariance(tsd.error.var)
 ```
 
-#### Get error for a record smoothed to a given timescale
+#### Get error for a record smoothed to a given timescale, here 500 years.
 
-```{r}
+```{r, warning=FALSE}
 err.500 <- GetProxyError(tsd.error.var, timescale = 500)
 knitr::kable(err.500, digits = 2)
 ```
