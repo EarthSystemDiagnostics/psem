@@ -710,11 +710,14 @@ IntegrateErrorSpectra <- function(pes, method = "sincfilter",
       flt.lst <- lapply(tau_smooth, function(s) {
         asinc(df$nu, T = s, delta_t = spec.pars$delta_t)^2
       })
-      df.m.lst <- lapply(flt.lst, function(flt) d.nu * df * flt)
-
+      
+      df2 <- as.matrix(df) * d.nu
+      df.m.lst <- lapply(flt.lst, function(flt) df2 * flt)
+      
       var.df.lst <- lapply(df.m.lst, function(df.m) {
-        data.frame(t(colSums(df.m, na.rm = TRUE)))
+        colSums(df.m, na.rm = TRUE)
       })
+      
       var.df <- bind_rows(var.df.lst)
       var.df$smoothed.resolution = tau_smooth
 
