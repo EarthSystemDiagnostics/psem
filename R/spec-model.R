@@ -471,6 +471,28 @@ asinc <- function(x, T, delta_t) {
 }
 
 
+
+#' Bioturbation Transfer Function. 
+#' 
+#' @description Fourier transform of bioturbation and sediment slice thickness filter.
+#'
+#' @inheritParams ProxyErrorSpectrum
+#'
+#' @return a vector
+#' @export
+#'
+#' @examples
+#' nu = seq(1/10000, 1/50, 1/10000)
+#' tf <- TF.f_bs(nu = nu, tau_b = 1000*10/50, tau_s = 1000*1/50)
+#' plot(nu, abs(tf)^2, type = "l", log = "xy")
+TF.f_bs <- function(nu, tau_b, tau_s) {
+  i <- 0 + 1i
+  sinc(nu * tau_s) * (1 + i * 2 * pi * nu * tau_b)^-1 * exp(i * 2 * pi * nu * tau_b)
+}
+
+
+
+
 #' Power function for climate
 #'
 #' @param nu frequency
@@ -861,14 +883,7 @@ ExpectedCorrelation <- function(pes, spec.pars = NULL) {
 
   pes[pes == Inf] <- 0
 
-  # Fourier transform of bioturbation and sediment slice thickness filter
-  TF.f_bs <- function(nu, tau_b, tau_s) {
-    i <- 0 + 1i
-    sinc(nu * tau_s) * (1 + i * 2 * pi * nu * tau_b)^-1 * exp(i * 2 * pi * nu * tau_b)
-  }
-
   filt <- abs(TF.f_bs(pes$nu, spec.pars$tau_b, spec.pars$tau_s))^2
-
 
   pes.full[["proxy.error.spec"]]$Climate.biot <- pes$Climate * filt
 
