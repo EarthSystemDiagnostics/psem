@@ -1,6 +1,6 @@
 Package: psem
 Title: Proxy Spectral Error Model
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(person("Thomas", "Laepple", email = "tlaepple@awi.de", role = c("aut")),
   person("Torben", "Kunz", email = "torben.kunz@awi.de", role = c("aut")),
   person("Andrew", "Dolman", email = "andrew.dolman@awi.de", role = c("aut", "cre")))

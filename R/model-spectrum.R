@@ -25,7 +25,7 @@
 #' ModelSpectrum(freq = c(0.6, 1), latitude = 20, beta=1, bPlot=FALSE)
 
 ModelSpectrum <- function(freq = NULL, latitude, spectable = psem:::spectable, beta = 1,
-                          variable = c("temperature", "d18O", "T_deg_Mg_Ca", "T_deg_Uk37", "d18O"),
+                          variable = c("temperature", "d18O", "T_deg_Mg_Ca", "T_deg_Uk37"),
                           freq.match.lower = 0.03,
                           freq.match.upper = 0.1, bPlot = FALSE){
 
@@ -102,6 +102,9 @@ ModelSpectrum <- function(freq = NULL, latitude, spectable = psem:::spectable, b
     lines(composite$freq, composite$spec, lwd = 3, col = "Green")
   }
 
+  
+  if (variable == "d18O") slow.spec.scl <- slow.spec.scl / (4.8^2)
+  
   composite$alpha = slow.spec.scl
   composite$beta = beta
   composite$freq.match.lower = freq.match.lower

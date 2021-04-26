@@ -10,7 +10,7 @@ ModelSpectrum(
   latitude,
   spectable = psem:::spectable,
   beta = 1,
-  variable = c("temperature", "d18O", "T_deg_Mg_Ca", "T_deg_Uk37", "d18O"),
+  variable = c("temperature", "d18O", "T_deg_Mg_Ca", "T_deg_Uk37"),
   freq.match.lower = 0.03,
   freq.match.upper = 0.1,
   bPlot = FALSE
