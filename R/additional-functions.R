@@ -130,6 +130,8 @@ RelativeAmplitudeModulation <- function(latitude, maxTimeKYear = 100,
 #' @param proxy.type Proxy type, decC or d18O
 #'
 #' @return A list
+#' @importFrom geosphere distm
+#' @importFrom geosphere distHaversine
 #' @export
 #'
 #' @examples
@@ -138,20 +140,24 @@ AmpFromLocation <- function(longitude, latitude, depth.upr, depth.lwr,
                             proxy.type=c("degC", proxy.types)){
 
   proxy.type <- match.arg(proxy.type, choices = c("degC", proxy.types))
+  
+  available.coords <- breitkreuz.coords
+  
+  available.coords$dist <- as.numeric(
+    geosphere::distm(c(longitude, latitude),
+                     available.coords,
+                     fun = geosphere::distHaversine)
+    )
 
-  breit.lons <- unique(breitkreuz.amp$longitude)
-  nearest.lon <- breit.lons[which.min(abs(longitude - breit.lons))]
-
-  breit.lats <- unique(breitkreuz.amp$latitude)
-  nearest.lat <- breit.lats[which.min(abs(latitude - breit.lats))]
-
-  if (longitude != nearest.lon | latitude != nearest.lat){
+  nearest.coords <- available.coords[which.min(available.coords$dist), ]
+  
+ if (longitude != nearest.coords$longitude | latitude != nearest.coords$latitude){
     message(paste0("Returning for closest available coordinates: longitude = ",
-                   nearest.lon, ", latitude = ", nearest.lat))
+                   nearest.coords$longitude, ", latitude = ", nearest.coords$latitude))
   }
 
-  depth.sub <- breitkreuz.amp[breitkreuz.amp$longitude == nearest.lon, ]
-  depth.sub <- depth.sub[depth.sub$latitude == nearest.lat, ]
+  depth.sub <- breitkreuz.amp[breitkreuz.amp$longitude == nearest.coords$longitude, ]
+  depth.sub <- depth.sub[depth.sub$latitude == nearest.coords$latitude, ]
   depth.sub <- depth.sub[depth.sub$depth.upr <= depth.upr, ]
   depth.sub <- depth.sub[depth.sub$depth.lwr >= depth.lwr, ]
 

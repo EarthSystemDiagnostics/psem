@@ -17,7 +17,8 @@ Imports:
     ggplot2,
     orbitalforcing (>= 0.1),
     dplyr,
-    tidyr
+    tidyr,
+    geosphere
 Remotes: 
     earthsystemdiagnostics/orbitalforcing
 Suggests: 

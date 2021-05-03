@@ -1,5 +1,5 @@
 ## process Breitkreuz et al d18O, salinity and temperature data for amplitudes and means
-#fl <- system.file("/extdata/breitkreuz.tbl.RData", package = "ecusdata")
+fl <- system.file("/extdata/breitkreuz.tbl.RData", package = "ecusdata")
 load(fl)
 
 GetAmp <- function(x) {diff(range(x, na.rm = TRUE))}
@@ -39,7 +39,13 @@ breitkreuz.mean <- breitkreuz.tbl.2 %>%
 
 breitkreuz.amp <- left_join(breitkreuz.amp, breitkreuz.mean)
 
-#usethis::use_data(breitkreuz.amp, breitkreuz.depth.tbl, overwrite = TRUE, internal = FALSE)
+
+breitkreuz.coords <- unique(breitkreuz.amp[, c("longitude", "latitude")])
+
+#usethis::use_data(breitkreuz.coords, internal = TRUE)
+
+
+#usethis::use_data(breitkreuz.amp, breitkreuz.depth.tbl, breitkreuz.coords, overwrite = TRUE, internal = TRUE)
 
 
 
