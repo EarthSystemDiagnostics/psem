@@ -6,14 +6,14 @@ GetAmp <- function(x) {diff(range(x, na.rm = TRUE))}
 
 library(tidyverse)
 
-ecustools::d18OcFromd18OwTemp(1.3, 5)
+#ecustools::d18OcFromd18OwTemp(1.3, 5)
 
 breitkreuz.tbl.2 <- breitkreuz.tbl %>%
   mutate(d18Oc = ecustools::d18OcFromd18OwTemp(d18O, potential.temperature))
 
 
 breitkreuz.amp <- breitkreuz.tbl.2 %>%
-  filter(depth >= -670) %>%
+  #filter(depth >= -670) %>%
   rename(p.T = potential.temperature) %>%
   filter(complete.cases(d18O, salinity, p.T)) %>%
   select(-month) %>%
@@ -41,6 +41,8 @@ breitkreuz.amp <- left_join(breitkreuz.amp, breitkreuz.mean)
 
 
 breitkreuz.coords <- unique(breitkreuz.amp[, c("longitude", "latitude")])
+
+#usethis::use_data(breitkreuz.amp.2, internal = FALSE)
 
 #usethis::use_data(breitkreuz.coords, internal = TRUE)
 
