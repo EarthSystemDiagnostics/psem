@@ -53,7 +53,7 @@ breitkreuz.coords <- unique(breitkreuz.amp[, c("longitude", "latitude")])
 
 # 
 # 
-# breitkreuz.amp %>%
+# psem:::breitkreuz.amp %>%
 #   filter(longitude == 0.5) %>%
 #   ggplot(aes(x = latitude, y = p.T_amp, colour = factor(depth))) +
 #   geom_point()
@@ -93,7 +93,7 @@ breitkreuz.coords <- unique(breitkreuz.amp[, c("longitude", "latitude")])
 # 
 # 
 # PlotWorld() +
-#   geom_tile(data = filter(breitkreuz.amp, depth == -25), aes(x = longitude, y = latitude,
+#   geom_tile(data = filter(psem:::breitkreuz.amp, depth == -25), aes(x = longitude, y = latitude,
 #                             group = d18O_amp, fill = d18O_amp)) +
 #   scale_fill_viridis_c(option = "inferno") +
 #   expand_limits(fill = 0)
@@ -120,3 +120,6 @@ breitkreuz.coords <- unique(breitkreuz.amp[, c("longitude", "latitude")])
 #   scale_fill_viridis_c(option = "inferno") +
 #   expand_limits(fill = 0) +
 #   facet_wrap(~depth, labeller = label_both)
+
+
+
