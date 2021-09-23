@@ -105,57 +105,84 @@ breitkreuz.plafom.weighted.var <- breitkreuz.tbl.2 %>%
   filter(complete.cases(plafom.ab)) %>%
   select(-month) %>%
   group_by(longitude, latitude, depth, taxon) %>%
-  summarise(p.T_var = WeightedVar(p.T, plafom.ab)) %>%
+  summarise(p.T_var_wtd = WeightedVar(p.T, plafom.ab)) %>%
   ungroup()
 
 
 
-breitkreuz.var
-
-
 tmp <- breitkreuz.plafom.weighted.var %>% 
-  filter(taxon == "ruber") %>% 
-  rename(wt.var = p.T_var) %>% 
+  #filter(taxon == "pachydermaD") %>% 
+  #rename(p.T_var_wtd = p.T_var.wtd) %>% 
   left_join(., breitkreuz.var) %>% 
-  filter(depth == -25, complete.cases(wt.var)) %>% 
+  filter(depth >= -25, 
+         complete.cases(p.T_var_wtd) 
+         ) %>% 
   mutate(loc = paste0(latitude, longitude))
 
 tmp %>% 
-  ggplot(aes(x = p.T_var, y = wt.var)) +
+  ggplot(aes(x = p.T_var, y = p.T_var_wtd)) +
   geom_point() +
-  geom_abline(intercept = 0, slope = 1, colour = "red")
+  geom_abline(intercept = 0, slope = seq(0.5, 1.1, 0.1), colour = "red") +
+  facet_wrap(~taxon)
 
 tmp %>% 
-  ggplot(aes(x = latitude, y = wt.var/p.T_var)) +
-  geom_point() #+
-  #geom_abline(intercept = 0, slope = 1, colour = "red")
+  ggplot(aes(x = latitude, y = sqrt(p.T_var))) +
+  geom_point(alpha = 0.025) +
+  geom_point(aes(y = sqrt(p.T_var_wtd)), colour = "Red", alpha = 0.025) +
+  facet_wrap(~taxon)
+
+tmp %>% 
+  ggplot(aes(x = latitude, y = sqrt(p.T_var_wtd) / sqrt(p.T_var))) +
+  geom_point(alpha = 0.025) +
+  facet_wrap(~taxon)
+
+
+
+a <- PlotWorld() +
+  geom_tile(data = tmp, aes(x = longitude, y = latitude,
+                            group = loc, fill = sqrt(p.T_var))) +
+  scale_fill_viridis_c(option = "inferno", limits = c(0, 6)) +
+  expand_limits(fill = 0)+
+  facet_wrap(~taxon)
+
+b <- PlotWorld() +
+  geom_tile(data = tmp, aes(x = longitude, y = latitude,
+                            group = loc, fill = sqrt(p.T_var_wtd))) +
+  scale_fill_viridis_c(option = "inferno", limits = c(0, 6)) +
+  expand_limits(fill = 0)+
+  facet_wrap(~taxon)
+
+egg::ggarrange(a, b, ncol = 1)
+
 
 
 PlotWorld() +
   geom_tile(data = tmp, aes(x = longitude, y = latitude,
-                            group = loc, fill = wt.var)) +
-  scale_fill_viridis_c(option = "inferno") +
-  expand_limits(fill = 0)
-
-
-PlotWorld() +
-  geom_tile(data = tmp, aes(x = longitude, y = latitude,
-                            group = loc, fill = p.T_var)) +
-  scale_fill_viridis_c(option = "inferno") +
-  expand_limits(fill = 0)
-
-
-PlotWorld() +
-  geom_tile(data = tmp, aes(x = longitude, y = latitude,
-                            group = loc, fill = 1/(sqrt(wt.var)/sqrt(p.T_var)))) +
+                            group = loc, fill = ((p.T_var_wtd/p.T_var)))) +
   #scale_fill_viridis_c(option = "inferno") +
-  scale_fill_gradient2("", midpoint = 1) +
+  scale_fill_gradient2(midpoint = 0, trans = "log10") +
   expand_limits(fill = 0)
 
 
 PlotWorld() +
   geom_tile(data = tmp, aes(x = longitude, y = latitude,
-                            group = loc, fill = (wt.var/p.T_var))) +
-  scale_fill_viridis_c(option = "inferno") +
-  #scale_fill_gradient2(midpoint = 1) +
+                            group = loc, fill = sqrt(p.T_var_wtd) - sqrt(p.T_var))) +
+  #scale_fill_viridis_c(option = "inferno") +
+  scale_fill_gradient2(midpoint = 0) +
   expand_limits(fill = 0)
+
+
+left_join(psem:::breitkreuz.amp, breitkreuz.var) %>% 
+  filter(depth >= -525) %>% 
+  mutate(amp.var = psem:::VarSine(p.T_amp)) %>% 
+  ggplot(aes(x = amp.var, y = p.T_var)) +
+  geom_point() +
+  geom_abline(intercept = 0, slope = c(0.9, 1.1, 1), colour = "red") +
+  facet_wrap(~depth, scales = "free")
+
+
+
+
+
+
+
