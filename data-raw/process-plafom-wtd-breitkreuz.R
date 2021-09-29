@@ -95,7 +95,7 @@ breitkreuz.var <- breitkreuz.tbl.2 %>%
   rename(p.T = potential.temperature) %>%
   filter(complete.cases(d18O, salinity, p.T)) %>%
   select(-month) %>%
-  group_by(longitude, latitude, depth) %>%
+  group_by(cell, longitude, latitude, depth) %>%
   summarise_all(funs(var = var)) %>%
   ungroup()
 
@@ -113,70 +113,106 @@ breitkreuz.plafom.weighted.var <- breitkreuz.tbl.2 %>%
   ungroup()
 
 
+#save(breitkreuz.var, file = "breitkreuz.var.rdata")
 #save(breitkreuz.plafom.abundance, file = "breitkreuz.plafom.abundance.rdata")
 #save(breitkreuz.plafom.weighted.var, file = "breitkreuz.plafom.weighted.var.rdata")
 
+load(file = "breitkreuz.plafom.abundance.rdata")
+load(file = "breitkreuz.plafom.weighted.var.rdata")
+
 
 tmp <- breitkreuz.plafom.weighted.var %>% 
-  #filter(taxon == "pachydermaD") %>% 
-  #rename(p.T_wtd.var = p.T_var.wtd) %>% 
-  left_join(., breitkreuz.var) %>% 
-  filter(depth >= -25, 
-         complete.cases(p.T_wtd.var) 
-         ) 
-tmp %>% 
-  ggplot(aes(x = p.T_var, y = p.T_wtd.var)) +
-  geom_point() +
-  geom_abline(intercept = 0, slope = seq(0.5, 1.1, 0.1), colour = "red") +
-  facet_wrap(~taxon)
+   left_join(., breitkreuz.var) %>% 
+  filter(depth >= -25) 
+
 
 tmp %>% 
-  ggplot(aes(x = latitude, y = sqrt(p.T_var))) +
-  geom_point(alpha = 0.025) +
-  geom_point(aes(y = sqrt(p.T_wtd.var)), colour = "Red", alpha = 0.025) +
-  facet_wrap(~taxon)
+  ggplot(aes(x = sqrt(p.T_var), y = sqrt(p.T_wtd.var))) +
+  geom_point(alpha = 0.01) +
+  geom_abline(data = tibble(slope = seq(0.5, 1.1, 0.1)),
+              aes(intercept = 0, slope = slope, colour = slope)) +
+  facet_wrap(~taxon) +
+  scale_colour_viridis_c()
+
+
+tmp.lat <- tmp %>% 
+  group_by(taxon, latitude) %>% 
+  summarise(mean.SD_ratio = mean(sqrt(p.T_wtd.var / p.T_var), na.rm = TRUE),
+            mean.p.T_var = mean(p.T_var, na.rm = TRUE),
+            mean.p.T_wtd.var = mean(p.T_wtd.var, na.rm = TRUE)) 
+
+
+tmp.lat %>% 
+  select(-mean.SD_ratio) %>% 
+  pivot_longer(cols = contains("var")) %>% 
+  ggplot(aes(x = latitude, y = sqrt(value), colour = name)) +
+  geom_line() +
+  facet_wrap(~taxon) +
+  expand_limits(x = c(-90, 90))
+
+
+tmp.lat %>% 
+  ggplot(aes(x = latitude, y = mean.SD_ratio)) +
+  geom_line() +
+  facet_wrap(~taxon) +
+  expand_limits(x = c(-90, 90))
+
+tmp.lat %>% 
+  ggplot(aes(x = latitude, y = (mean.p.T_wtd.var / mean.p.T_var))) +
+  geom_line() +
+  scale_y_log10() +
+  facet_wrap(~taxon) +
+  expand_limits(x = c(-90, 90))
+
+mean(tmp.lat$mean.SD_ratio, na.rm = T)
+
 
 tmp %>% 
-  ggplot(aes(x = latitude, y = sqrt(p.T_wtd.var) / sqrt(p.T_var))) +
-  geom_point(alpha = 0.025) +
+  ggplot(aes(x = sqrt(p.T_wtd.var) / sqrt(p.T_var))) +
+  geom_vline(xintercept = 1) +
+  geom_histogram() +
   facet_wrap(~taxon)
 
+PlotWorld <- function(){
+  world <- map_data("world")
+  worldmap <- ggplot(world, aes(x = long, y = lat, group = group)) +
+    geom_polygon(fill = "Grey") +
+    coord_quickmap() +
+    scale_x_continuous(limits = c(-180, 180), breaks = seq(-180, 180, 60))+
+    scale_y_continuous(limits = c(-90, 90), breaks = c(-45, 0, 45)) +
+    labs(x = "Longitude", y = "Latitude") +
+    theme_bw()
+  worldmap
+}
 
 
 a <- PlotWorld() +
   geom_tile(data = tmp, aes(x = longitude, y = latitude,
-                            group = loc, fill = sqrt(p.T_var))) +
+                            group = cell, fill = sqrt(p.T_var))) +
   scale_fill_viridis_c(option = "inferno", limits = c(0, 6)) +
   expand_limits(fill = 0)+
-  facet_wrap(~taxon)
+  facet_wrap(~taxon, ncol = 2)
 
 b <- PlotWorld() +
   geom_tile(data = tmp, aes(x = longitude, y = latitude,
-                            group = loc, fill = sqrt(p.T_wtd.var))) +
+                            group = cell, fill = sqrt(p.T_wtd.var))) +
   scale_fill_viridis_c(option = "inferno", limits = c(0, 6)) +
   expand_limits(fill = 0)+
-  facet_wrap(~taxon)
+  facet_wrap(~taxon, ncol = 2)
 
 egg::ggarrange(a, b, ncol = 1)
 
 
-
 PlotWorld() +
-  geom_tile(data = tmp, aes(x = longitude, y = latitude,
-                            group = loc, fill = ((p.T_wtd.var/p.T_var)))) +
+  geom_raster(data = tmp, aes(x = longitude, y = latitude,
+                            group = cell, fill = sqrt((p.T_wtd.var/p.T_var)))) +
   #scale_fill_viridis_c(option = "inferno") +
-  scale_fill_gradient2(midpoint = 0, trans = "log10") +
-  expand_limits(fill = 0)
+  scale_fill_gradient2("SD ratio", midpoint = 1) +
+  expand_limits(fill = 0)+
+  facet_wrap(~taxon, ncol = 2)
 
 
-PlotWorld() +
-  geom_tile(data = tmp, aes(x = longitude, y = latitude,
-                            group = loc, fill = sqrt(p.T_wtd.var) - sqrt(p.T_var))) +
-  #scale_fill_viridis_c(option = "inferno") +
-  scale_fill_gradient2(midpoint = 0) +
-  expand_limits(fill = 0)
-
-
+## comparison with VarSine amp approximation in PSEM
 left_join(psem:::breitkreuz.amp, breitkreuz.var) %>% 
   filter(depth >= -525) %>% 
   mutate(amp.var = psem:::VarSine(p.T_amp)) %>% 
