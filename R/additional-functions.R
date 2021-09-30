@@ -176,6 +176,9 @@ AmpFromLocation <- function(longitude, latitude, depth.upr, depth.lwr,
     out <- list(mean.amp=mean.amp, sig.sq_c=sig.sq_c, mean.p.T = mean.p.T,
                 mean.d18Oc = NA)
   }
+  
+  out <- append(list(breit.latitude = nearest.coords$latitude), out)
+  out <- append(list(breit.longitude = nearest.coords$longitude), out)
 
   return(out)
 }
