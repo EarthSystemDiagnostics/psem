@@ -5,3 +5,7 @@
 ^README\.md$
 ^Readme_files$
 ^LICENSE\.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
