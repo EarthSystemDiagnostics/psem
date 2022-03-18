@@ -945,7 +945,7 @@ ExpectedCorrelation <- function(pes, spec.pars = NULL) {
 #' @title Transform axis to reversed log scale
 #' @description Custom axis transformation function
 #' @param base base for the log transformation, Default: exp(1)
-#' @details Copied here from ecustools to avoid dependency
+#' @details Copied here from prxytools to avoid dependency
 #' @seealso
 #'  \code{\link[scales]{trans_new}},\code{\link[scales]{breaks_log}}
 #' @rdname reverselog_trans

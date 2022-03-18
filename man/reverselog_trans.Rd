@@ -16,7 +16,7 @@ reverselog_trans(base = exp(1))
 Custom axis transformation function
 }
 \details{
-Copied here from ecustools to avoid dependency
+Copied here from prxytools to avoid dependency
 }
 \seealso{
 \code{\link[scales]{trans_new}},\code{\link[scales]{breaks_log}}
