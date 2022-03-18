@@ -2,8 +2,6 @@
 output:
   md_document: 
     preserve_yaml: false
-  html_document:
-    keep_md: yes 
 ---
 
 # PSEM: Proxy Spectral Error Model.
