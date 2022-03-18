@@ -14,7 +14,7 @@ discussion papers:
 
 -   A spectral approach to estimating the timescale-dependent
     uncertainty of paleoclimate records – Part II: Application and
-    interpretation. <https://cp.copernicus.org/preprints/cp-2019-153/>
+    interpretation. <https://doi.org/10.5194/cp-17-825-2021>
 
 Please contact Dr Andrew Dolman \<<andrew.dolman@awi.de>\>, Prof. Thomas
 Laepple \<<tlaepple@awi.de>\>, or Dr Torben Kunz \<<tkunz@awi.de>\>, at

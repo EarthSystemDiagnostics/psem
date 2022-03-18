@@ -8,6 +8,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  dpi = 300,
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
@@ -24,7 +25,7 @@ knitr::opts_chunk$set(
 https://doi.org/10.5194/cp-16-1469-2020
 
 * A spectral approach to estimating the timescale-dependent uncertainty of paleoclimate records – Part II: Application and interpretation.
-https://cp.copernicus.org/preprints/cp-2019-153/
+https://doi.org/10.5194/cp-17-825-2021
 
 
 Please contact Dr Andrew Dolman <<andrew.dolman@awi.de>>, Prof. Thomas Laepple <<tlaepple@awi.de>>, or Dr Torben Kunz <<tkunz@awi.de>>, at the Alfred-Wegener-Institute, Helmholtz Centre for Polar and Marine Research, Germany, for more information.
@@ -59,7 +60,7 @@ library(psem)
 
 #### Power spectrum for the stochastic climate
 
-```{r climate_spec_ex1, fig.width=4, fig.height=3, warning=FALSE}
+```{r climate_spec_ex1, warning=FALSE}
 # PSD Climate
 example.lat <- 45
 
@@ -121,20 +122,18 @@ spec.pars.ex1 <- GetSpecPars(
   clim.spec.fun.args =
     list(latitude = example.lat, beta = 1)
 )
-
-
 ```
 
 #### Call `ProxyErrorSpectrum` with these parameters and plot it.
 
-```{r, fig.width=6, fig.height=4, warning=FALSE}
+```{r, warning=FALSE}
 proxy.err.spec <- do.call(ProxyErrorSpectrum, spec.pars.ex1)
 PlotSpecError(proxy.err.spec)
 ```
 
 #### Integrate the error spectrum to get timescale-dependent error.
 
-```{r, fig.width=6, fig.height=4, warning=FALSE}
+```{r, warning=FALSE}
 tsd.error.var <- IntegrateErrorSpectra(proxy.err.spec)
 PlotTSDVariance(tsd.error.var)
 ```
