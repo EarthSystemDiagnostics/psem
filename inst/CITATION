@@ -1,0 +1,27 @@
+citHeader("To cite psem in publications use:")
+
+citEntry(
+  entry    = "Article",
+  title    = "A spectral approach to estimating the timescale-dependent uncertainty of paleoclimate records – Part 2: Application and interpretation",
+  author   = "Dolman, A. M., Kunz, T., Groeneveld, J., and Laepple, T.",
+  journal  = "Climate of the Past",
+  year     = 2021,
+  volume   = 17,
+  number   = 2,
+  pages    = 825-841,
+  url      = "https://doi.org/10.5194/cp-17-825-2021",
+  textVersion = paste("Dolman, A. M., Kunz, T., Groeneveld, J., and Laepple, T.: A spectral approach to estimating the timescale-dependent uncertainty of paleoclimate records – Part 2: Application and interpretation, 17, 825–841, https://doi.org/10.5194/cp-17-825-2021, 2021.
+")
+)
+
+citEntry(
+entry = "Manual",
+title = "psem: Proxy Spectral Error Model",
+author = c(person("Thomas", "Laepple", email = "tlaepple@awi.de", role = c("aut")),
+  person("Torben", "Kunz", email = "torben.kunz@awi.de", role = c("aut")),
+  person("Andrew", "Dolman", email = "andrew.dolman@awi.de", role = c("aut", "cre"))),
+  note = "R package version 1.0.1",
+    url = "https://github.com/EarthSystemDiagnostics/psem",
+    textVersion = paste("Dolman, A. M., Kunz, T., Groeneveld, J., and Laepple, T.: psem: Proxy Spectral Error Model. R package version 1.0.1 <https://github.com/EarthSystemDiagnostics/psem>")
+)
+
