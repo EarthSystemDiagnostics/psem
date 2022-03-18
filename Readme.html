@@ -40,7 +40,7 @@
 
 <div id="psem-proxy-spectral-error-model" class="section level1">
 
-<hr><p><img src="inst/PalMod_Logo_RGB.png"></p>
+<hr><p><img src="reference/figures/PalMod_Logo_RGB.png"></p>
 <p><strong>psem</strong> implements the Proxy Spectral Error Model described in the discussion papers:</p>
 <ul><li><p>A spectral approach to estimating the timescale-dependent uncertainty of paleoclimate records – Part I: Theoretical concept. <a href="https://doi.org/10.5194/cp-16-1469-2020" class="external-link uri">https://doi.org/10.5194/cp-16-1469-2020</a></p></li>
 <li><p>A spectral approach to estimating the timescale-dependent uncertainty of paleoclimate records – Part II: Application and interpretation. <a href="https://cp.copernicus.org/preprints/cp-2019-153/" class="external-link uri">https://cp.copernicus.org/preprints/cp-2019-153/</a></p></li>
@@ -73,7 +73,7 @@
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>p.clim.spec.ex1 <span class="ot">&lt;-</span> <span class="fu">PlotModelSpectrum</span>(clim.spec.ex1)</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>p.clim.spec.ex1</span></code></pre></div>
-<p><img src="Readme_files/figure-markdown_strict/climate_spec_ex1-1.png"></p>
+<p><img src="reference/figures/climate_spec_ex1-1.png"></p>
 </div>
 <div class="section level4">
 <h4 id="amplitude-of-the-seasonal-cycle">Amplitude of the seasonal cycle<a class="anchor" aria-label="anchor" href="#amplitude-of-the-seasonal-cycle"></a></h4>
@@ -84,7 +84,7 @@
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">depth.upr =</span> <span class="dv">0</span>, <span class="at">depth.lwr =</span> <span class="sc">-</span><span class="dv">50</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Returning for closest available coordinates: longitude = -0.5, latitude = 44.5</span></span></code></pre></div>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Returning for closest available coordinates: longitude = -0.5, latitude = 45.5</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="orbital-modulation-of-the-amplitude-of-the-seasonal-cycle">Orbital modulation of the amplitude of the seasonal cycle<a class="anchor" aria-label="anchor" href="#orbital-modulation-of-the-amplitude-of-the-seasonal-cycle"></a></h4>
@@ -127,22 +127,21 @@
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">PlotSpecError</span>(proxy.err.spec)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Joining, by = c("component", "ax.grp")</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="do">## geom_path: Each group consists of only one observation. Do you need to adjust</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="do">## the group aesthetic?</span></span></code></pre></div>
-<p><img src="Readme_files/figure-markdown_strict/unnamed-chunk-6-1.png"></p>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">## geom_path: Each group consists of only one observation. Do you need to adjust</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="do">## the group aesthetic?</span></span></code></pre></div>
+<p><img src="reference/figures/unnamed-chunk-6-1.png"></p>
 </div>
 <div class="section level4">
 <h4 id="integrate-the-error-spectrum-to-get-timescale-dependent-error">Integrate the error spectrum to get timescale-dependent error.<a class="anchor" aria-label="anchor" href="#integrate-the-error-spectrum-to-get-timescale-dependent-error"></a></h4>
 <div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tsd.error.var <span class="ot">&lt;-</span> <span class="fu">IntegrateErrorSpectra</span>(proxy.err.spec)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">PlotTSDVariance</span>(tsd.error.var)</span></code></pre></div>
-<p><img src="Readme_files/figure-markdown_strict/unnamed-chunk-7-1.png"></p>
+<p><img src="reference/figures/unnamed-chunk-7-1.png"></p>
 </div>
 <div class="section level4">
 <h4 id="get-error-for-a-record-smoothed-to-a-given-timescale-here-500-years">Get error for a record smoothed to a given timescale, here 500 years.<a class="anchor" aria-label="anchor" href="#get-error-for-a-record-smoothed-to-a-given-timescale-here-500-years"></a></h4>
 <div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>err<span class="fl">.500</span> <span class="ot">&lt;-</span> <span class="fu">GetProxyError</span>(tsd.error.var, <span class="at">timescale =</span> <span class="dv">500</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(err<span class="fl">.500</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
-<table class="table"><thead><tr class="header"><th style="text-align: left;">
+<table style="width:100%;" class="table"><colgroup><col style="width: 28%"><col style="width: 30%"><col style="width: 10%"><col style="width: 15%"><col style="width: 15%"></colgroup><thead><tr class="header"><th style="text-align: left;">
 smoothed.resolution
 </th>
 <th style="text-align: left;">
@@ -164,13 +163,13 @@ exl.f.zero
 Aliasing.seasonal
 </td>
 <td style="text-align: right;">
-0.03
+0.04
 </td>
 <td style="text-align: right;">
-0.13
+0.18
 </td>
 <td style="text-align: right;">
-0.13
+0.17
 </td>
 </tr><tr class="even"><td style="text-align: left;">
 500
@@ -269,13 +268,13 @@ NA
 Seasonal.bias
 </td>
 <td style="text-align: right;">
-1.37
+1.80
 </td>
 <td style="text-align: right;">
-1.37
+1.80
 </td>
 <td style="text-align: right;">
-0.07
+0.09
 </td>
 </tr><tr class="odd"><td style="text-align: left;">
 500
@@ -284,13 +283,13 @@ Seasonal.bias
 Seasonal.bias.unc.
 </td>
 <td style="text-align: right;">
-0.47
+0.62
 </td>
 <td style="text-align: right;">
-0.48
+0.62
 </td>
 <td style="text-align: right;">
-0.02
+0.03
 </td>
 </tr><tr class="even"><td style="text-align: left;">
 500
@@ -299,13 +298,13 @@ Seasonal.bias.unc.
 Total.error
 </td>
 <td style="text-align: right;">
-1.47
+1.92
 </td>
 <td style="text-align: right;">
-1.51
+1.95
 </td>
 <td style="text-align: right;">
-0.34
+0.36
 </td>
 </tr></tbody></table></div>
 </div>
