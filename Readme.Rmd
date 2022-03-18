@@ -12,10 +12,10 @@ output:
 
 
 ```{r knitr_setup, echo=FALSE}
-knitr::opts_chunk$set(dev = "png", dpi = 300)
+knitr::opts_chunk$set(dev = "png", fig.path = "man/figures/")
 ```
 
-![](inst/PalMod_Logo_RGB.png)
+![](man/figures/PalMod_Logo_RGB.png)
 
 **psem** implements the Proxy Spectral Error Model described in the discussion papers:
 
@@ -126,14 +126,14 @@ spec.pars.ex1 <- GetSpecPars(
 
 #### Call `ProxyErrorSpectrum` with these parameters and plot it.
 
-```{r, fig.width=5, fig.height=3, warning=FALSE}
+```{r, fig.width=6, fig.height=4, warning=FALSE}
 proxy.err.spec <- do.call(ProxyErrorSpectrum, spec.pars.ex1)
 PlotSpecError(proxy.err.spec)
 ```
 
 #### Integrate the error spectrum to get timescale-dependent error.
 
-```{r, fig.width=4.5, fig.height=3, warning=FALSE}
+```{r, fig.width=6, fig.height=4, warning=FALSE}
 tsd.error.var <- IntegrateErrorSpectra(proxy.err.spec)
 PlotTSDVariance(tsd.error.var)
 ```

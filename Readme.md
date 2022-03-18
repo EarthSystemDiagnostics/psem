@@ -1,38 +1,31 @@
-PSEM: Proxy Spectral Error Model.
-=================================
+# PSEM: Proxy Spectral Error Model.
 
 ------------------------------------------------------------------------
 
-![](inst/PalMod_Logo_RGB.png)
+![](man/figures/PalMod_Logo_RGB.png)
 
 **psem** implements the Proxy Spectral Error Model described in the
 discussion papers:
 
 -   A spectral approach to estimating the timescale-dependent
     uncertainty of paleoclimate records – Part I: Theoretical concept.
-    <a href="https://doi.org/10.5194/cp-16-1469-2020" class="uri">https://doi.org/10.5194/cp-16-1469-2020</a>
+    <https://doi.org/10.5194/cp-16-1469-2020>
 
 -   A spectral approach to estimating the timescale-dependent
     uncertainty of paleoclimate records – Part II: Application and
-    interpretation.
-    <a href="https://cp.copernicus.org/preprints/cp-2019-153/" class="uri">https://cp.copernicus.org/preprints/cp-2019-153/</a>
+    interpretation. <https://cp.copernicus.org/preprints/cp-2019-153/>
 
-Please contact Dr Andrew Dolman
-&lt;<a href="mailto:andrew.dolman@awi.de" class="email">andrew.dolman@awi.de</a>&gt;,
-Prof. Thomas Laepple
-&lt;<a href="mailto:tlaepple@awi.de" class="email">tlaepple@awi.de</a>&gt;,
-or Dr Torben Kunz
-&lt;<a href="mailto:tkunz@awi.de" class="email">tkunz@awi.de</a>&gt;, at
-the Alfred-Wegener-Institute, Helmholtz Centre for Polar and Marine
-Research, Germany, for more information.
+Please contact Dr Andrew Dolman &lt;<andrew.dolman@awi.de>&gt;,
+Prof. Thomas Laepple &lt;<tlaepple@awi.de>&gt;, or Dr Torben Kunz
+&lt;<tkunz@awi.de>&gt;, at the Alfred-Wegener-Institute, Helmholtz
+Centre for Polar and Marine Research, Germany, for more information.
 
 This work was supported by German Federal Ministry of Education and
 Research (BMBF) as Research for Sustainability initiative
 [FONA](https://www.fona.de/) through the
 [PalMod](https://www.palmod.de/) project (FKZ: 01LP1509C).
 
-Installation
-------------
+## Installation
 
 **psem** can be installed directly from github
 
@@ -42,8 +35,7 @@ Installation
 
     remotes::install_github("EarthSystemDiagnostics/psem")
 
-Usage
------
+## Usage
 
     library(psem)
 
@@ -63,7 +55,7 @@ Usage
     p.clim.spec.ex1 <- PlotModelSpectrum(clim.spec.ex1)
     p.clim.spec.ex1
 
-![](Readme_files/figure-markdown_strict/climate_spec_ex1-1.png)
+![](man/figures/climate_spec_ex1-1.png)
 
 #### Amplitude of the seasonal cycle
 
@@ -74,7 +66,7 @@ Usage
       depth.upr = 0, depth.lwr = -50
     )
 
-    ## Returning for closest available coordinates: longitude = -0.5, latitude = 44.5
+    ## Returning for closest available coordinates: longitude = -0.5, latitude = 45.5
 
 #### Orbital modulation of the amplitude of the seasonal cycle
 
@@ -117,25 +109,31 @@ Usage
     PlotSpecError(proxy.err.spec)
 
     ## Joining, by = c("component", "ax.grp")
-
     ## geom_path: Each group consists of only one observation. Do you need to adjust
     ## the group aesthetic?
 
-![](Readme_files/figure-markdown_strict/unnamed-chunk-6-1.png)
+![](man/figures/unnamed-chunk-6-1.png)
 
 #### Integrate the error spectrum to get timescale-dependent error.
 
     tsd.error.var <- IntegrateErrorSpectra(proxy.err.spec)
     PlotTSDVariance(tsd.error.var)
 
-![](Readme_files/figure-markdown_strict/unnamed-chunk-7-1.png)
+![](man/figures/unnamed-chunk-7-1.png)
 
 #### Get error for a record smoothed to a given timescale, here 500 years.
 
     err.500 <- GetProxyError(tsd.error.var, timescale = 500)
     knitr::kable(err.500, digits = 2)
 
-<table>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 30%" />
+<col style="width: 10%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">smoothed.resolution</th>
@@ -149,9 +147,9 @@ Usage
 <tr class="odd">
 <td style="text-align: left;">500</td>
 <td style="text-align: left;">Aliasing.seasonal</td>
-<td style="text-align: right;">0.03</td>
-<td style="text-align: right;">0.13</td>
-<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">0.18</td>
+<td style="text-align: right;">0.17</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">500</td>
@@ -198,23 +196,23 @@ Usage
 <tr class="even">
 <td style="text-align: left;">500</td>
 <td style="text-align: left;">Seasonal.bias</td>
-<td style="text-align: right;">1.37</td>
-<td style="text-align: right;">1.37</td>
-<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">1.80</td>
+<td style="text-align: right;">1.80</td>
+<td style="text-align: right;">0.09</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">500</td>
 <td style="text-align: left;">Seasonal.bias.unc.</td>
-<td style="text-align: right;">0.47</td>
-<td style="text-align: right;">0.48</td>
-<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.62</td>
+<td style="text-align: right;">0.62</td>
+<td style="text-align: right;">0.03</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">500</td>
 <td style="text-align: left;">Total.error</td>
-<td style="text-align: right;">1.47</td>
-<td style="text-align: right;">1.51</td>
-<td style="text-align: right;">0.34</td>
+<td style="text-align: right;">1.92</td>
+<td style="text-align: right;">1.95</td>
+<td style="text-align: right;">0.36</td>
 </tr>
 </tbody>
 </table>
