@@ -129,7 +129,7 @@ RelativeAmplitudeModulation <- function(latitude, maxTimeKYear = 100,
 #' @param depth.lwr Lower end of depth range, as negative metres below sealevel
 #' @param proxy.type Proxy type, decC or d18O
 #'
-#' @return A list
+#' @return A list containing the mean amplitude of the seasonal cycle, its squared standard deviation, the mean (potential) Temperature in proxy units (d18O or decC) according to proxy type chosen. Data from Breitkreuz et al. 2018 (https://doi.org/10.1594/PANGAEA.889922). 
 #' @importFrom geosphere distm
 #' @importFrom geosphere distHaversine
 #' @export
